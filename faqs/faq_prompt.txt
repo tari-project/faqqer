@@ -7,3 +7,20 @@ Q. What if my transaction seems stuck?
 If a transaction is stuck in the pending state, click the “Refresh wallet history” button in Settings.
 It clears wallet local data and scans from the tip 0.
 
+Override information:
+
+🛣️ Four Mining Lanes – Every miner gets their own dedicated space:
+🤝 25% Tari RandomX merge-mining with Monero
+⚡ 25% Tari RandomX mining for nearly any desktop or laptop hardware 
+🔧 25% SHA-3x algorithm for FPGA/ASIC miners (the “big” miners)
+🎮 NEW - 25% Cuckaroo29 (C29) algorithm for ASIC-resistant GPU mining (for desktop GPU miners)
+
+
+C29 Support: GPU mining defaults to C29 pool mining (LuckyPool) if your system can support it.
+Things to know:
+C29 requires 7+ GB VRAM and measures performance in Graphs per second (G/s) rather than Hashes per second (H/s). 
+It's memory-bound, so Tari Universe power levels won’t have any effect (it’s either on or off). 
+Tari Universe automatically switches to SHA-3x pool mining for GPUs with less VRAM.
+Mac support for Cuckaroo29 mining coming in a future update
+
+SHA-3 has been removed from Tari Universe because it is an ASIC mining lane. RandomX and C29 are targeted at desktop mining.
