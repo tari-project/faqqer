@@ -1,787 +1,368 @@
-Combined Chat History for channels: tariproject, OrderOfSoon
-Time period: Last 36 hours
-Generated on: 2025-09-19 17:17:39 UTC
+Combined Chat History for channels: tariproject
+Time period: Last 48 hours
+Generated on: 2026-01-05 20:04:02 UTC
 ======================================================================
 
-Channel: tariproject | User: None | Date: 2025-09-18 05:52:57
-Message: It's not currently. (Replying to: Unknown message)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 05:57:57
-Message: Are you mining with last lolMiner? It should be giving more in Cuckarro (Replying to: Unknown message)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 06:00:43
-Message: With lolminer yes (Replying to: Are you mining with last lolMiner? It should be giving more in Cuckarro)
---------------------------------------------------
-Channel: OrderOfSoon | User: efaykue_bot | Date: 2025-09-18 06:00:43
+Channel: tariproject | User: efaykue_bot | Date: 2026-01-03 21:00:35
 Message: 📊 Current Tari Network Stats 📊
-Block Height: 96,471
-RandomX (Tari) Hash Rate: 288 MH/s
-RandomX (Merged-Mined XMR) Hash Rate: 3.40 GH/s
-SHA3x Hash Rate: 45.5 TH/s
+Block Height: 172,632
+RandomX (Tari): 141 MH
+RandomX (Merged-Mined XMR): 4.12 GH
+SHA3x: 704 TH
+Cuckaroo 29: 118 Kg
 
 Want to learn more? Try '/faq mining' to get information about mining Tari. 
 --------------------------------------------------
-Channel: tariproject | User: efaykue_bot | Date: 2025-09-18 06:00:44
+Channel: tariproject | User: None | Date: 2026-01-03 21:26:09
+Message: Submitting ss because bot keeps deleting my question about this (Replying to: Unknown message)
+--------------------------------------------------
+Channel: tariproject | User: None | Date: 2026-01-03 21:26:57
+Message: there will be updates regarding this and much more on the space on Tuesday (Replying to: Submitting ss because bot keeps deleting my question about this)
+--------------------------------------------------
+Channel: tariproject | User: None | Date: 2026-01-03 21:29:04
+Message: Thank you boss, glad to hear 
+--------------------------------------------------
+Channel: tariproject | User: None | Date: 2026-01-03 21:29:23
+Message: np! happy new year (Replying to: Thank you boss, glad to hear)
+--------------------------------------------------
+Channel: tariproject | User: efaykue_bot | Date: 2026-01-04 00:00:53
 Message: 📊 Current Tari Network Stats 📊
-Block Height: 96,471
-RandomX (Tari) Hash Rate: 288 MH/s
-RandomX (Merged-Mined XMR) Hash Rate: 3.40 GH/s
-SHA3x Hash Rate: 45.5 TH/s
+Block Height: 172,738
+RandomX (Tari): 157 MH
+RandomX (Merged-Mined XMR): 4.39 GH
+SHA3x: 686 TH
+Cuckaroo 29: 114 Kg
 
 Want to learn more? Try '/faq mining' to get information about mining Tari. 
 --------------------------------------------------
-Channel: OrderOfSoon | User: None | Date: 2025-09-18 07:26:31
-Message: Media message 
+Channel: tariproject | User: efaykue_bot | Date: 2026-01-04 01:14:09
+Message: To assist you effectively, please provide your question in the format '/faq <type your question inline>'. For example, '/faq What is Tari Universe?'. 
 --------------------------------------------------
-Channel: OrderOfSoon | User: None | Date: 2025-09-18 07:26:32
-Message: Media message 
+Channel: tariproject | User: None | Date: 2026-01-04 01:14:31
+Message: /faq how to mine with xmrig 
 --------------------------------------------------
-Channel: OrderOfSoon | User: None | Date: 2025-09-18 07:26:47
-Message: I use my phone 
+Channel: tariproject | User: efaykue_bot | Date: 2026-01-04 01:14:33
+Message: To mine with XMRig using the Hatchling Pool for Tari, you can use the following command line: `./xmrig.exe --donate-level 1 -o hatchlings.rxpool.net:3333 -u [YOUR WALLET ADDRESS] -k`. This command sets the donation level to the XMRig developer to 1% of your hashrate, uses the Hatchling Pool, and specifies your Tari wallet address. The `-k` option enables keep-alive to maintain your connection to the pool. (Replying to: /faq how to mine with xmrig)
 --------------------------------------------------
-Channel: OrderOfSoon | User: None | Date: 2025-09-18 07:27:04
-Message: And my laptop 
+Channel: tariproject | User: None | Date: 2026-01-04 01:21:25
+Message: /faq how to create a wallet on cli Linux 
 --------------------------------------------------
-Channel: OrderOfSoon | User: pippopamaran | Date: 2025-09-18 08:03:53
-Message: surut 
+Channel: tariproject | User: efaykue_bot | Date: 2026-01-04 01:21:29
+Message: To create a wallet on CLI Linux for Tari, you can use the Minotari Console Wallet, which is part of the Tari suite of applications. You can download the necessary binaries from https://www.tari.com/downloads. Once downloaded, you can run the Minotari Console Wallet using the command line to manage your Tari coins. If you need more detailed instructions, please refer to the documentation or reach out to support staff for assistance. (Replying to: /faq how to create a wallet on cli Linux)
 --------------------------------------------------
-Channel: tariproject | User: efaykue_bot | Date: 2025-09-18 09:00:08
+Channel: tariproject | User: None | Date: 2026-01-04 01:21:58
+Message: /faq invalid address when mining with xmrig 
+--------------------------------------------------
+Channel: tariproject | User: efaykue_bot | Date: 2026-01-04 01:22:00
+Message: If you're encountering an 'invalid address' error when mining with XMRig, ensure that you are using your correct Tari wallet address, not a Monero address. Double-check the address format and make sure it adheres to the specifications for Tari addresses. If the issue persists, it may be helpful to consult the official documentation or support channels for further assistance. (Replying to: /faq invalid address when mining with xmrig)
+--------------------------------------------------
+Channel: tariproject | User: None | Date: 2026-01-04 01:22:58
+Message: /faq is Tari address one-sided: the wallet payment address in the cli wallet? 
+--------------------------------------------------
+Channel: tariproject | User: efaykue_bot | Date: 2026-01-04 01:23:02
+Message: In Tari, addresses can be either one-sided or interactive. The CLI wallet payment address can be a one-sided address, which means it does not require interaction between sender and receiver to create a valid transaction. This is indicated by the 'Features' byte in the address format. If you need more specific information about your wallet setup, please refer to the wallet documentation or contact support. (Replying to: /faq is Tari address one-sided: the wallet payment address in the cli wallet?)
+--------------------------------------------------
+Channel: tariproject | User: efaykue_bot | Date: 2026-01-04 03:00:12
 Message: 📊 Current Tari Network Stats 📊
-Block Height: 96,555
-RandomX (Tari) Hash Rate: 246 MH/s
-RandomX (Merged-Mined XMR) Hash Rate: 3.25 GH/s
-SHA3x Hash Rate: 48.2 TH/s
+Block Height: 172,820
+RandomX (Tari): 160 MH
+RandomX (Merged-Mined XMR): 4.17 GH
+SHA3x: 732 TH
+Cuckaroo 29: 116 Kg
 
 Want to learn more? Try '/faq mining' to get information about mining Tari. 
 --------------------------------------------------
-Channel: OrderOfSoon | User: efaykue_bot | Date: 2025-09-18 09:00:08
+Channel: tariproject | User: None | Date: 2026-01-04 04:06:04
+Message: TU has said this for a while now. I not appear to be earning any XTM when I have the app open and running. 
+--------------------------------------------------
+Channel: tariproject | User: None | Date: 2026-01-04 04:27:38
+Message: @possumously fyi (Replying to: TU has said this for a while now. I not appear to be earning any XTM when I have the app open and running.)
+--------------------------------------------------
+Channel: tariproject | User: efaykue_bot | Date: 2026-01-04 06:00:30
 Message: 📊 Current Tari Network Stats 📊
-Block Height: 96,555
-RandomX (Tari) Hash Rate: 246 MH/s
-RandomX (Merged-Mined XMR) Hash Rate: 3.25 GH/s
-SHA3x Hash Rate: 48.2 TH/s
+Block Height: 172,910
+RandomX (Tari): 153 MH
+RandomX (Merged-Mined XMR): 4.01 GH
+SHA3x: 651 TH
+Cuckaroo 29: 117 Kg
 
 Want to learn more? Try '/faq mining' to get information about mining Tari. 
 --------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 09:11:07
-Message: ? 
+Channel: tariproject | User: None | Date: 2026-01-04 08:14:11
+Message: Is the monthly claiming available on 2-3-4 January 2026? Thanks 
 --------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 09:11:21
-Message: I cant speak 
+Channel: tariproject | User: None | Date: 2026-01-04 08:23:39
+Message: claimed 
 --------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 09:16:32
-Message: You are (Replying to: I cant speak)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 09:17:54
-Message: I cant write h3ll0 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 09:18:05
-Message: The bot remove the message 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 09:20:50
-Message: We dont like hello over here (Replying to: I cant write h3ll0)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 09:22:39
-Message: what an amazing tari 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 09:22:50
-Message: bought at 0.07😓 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 09:23:03
-Message: Media message 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 09:23:36
-Message: lost 99% 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 09:26:29
-Message: who gives sell order of 15M at MEXC? 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 09:26:42
-Message: I dont know, its free market 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 09:26:54
-Message: Also no price talk in this chat 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 09:28:36
-Message: is there a dedicated chat for it? (Replying to: Also no price talk in this chat)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 09:34:03
-Message: Not official ones 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 09:38:03
-Message: inofficial? 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 09:38:24
-Message: @tariverse 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 11:07:12
-Message: its worth it to mine with gpus ?. 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 11:30:48
-Message: about 24hrs on a 4060Ti - 7.12 G/s
-Hashrate (15m avg)
-100.15 XTM 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 11:37:04
-Message: Media message 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 11:41:11
-Message: its very huge hashrate tbh 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 11:54:15
-Message: what the miner reports 
---------------------------------------------------
-Channel: OrderOfSoon | User: efaykue_bot | Date: 2025-09-18 12:00:24
+Channel: tariproject | User: efaykue_bot | Date: 2026-01-04 09:00:50
 Message: 📊 Current Tari Network Stats 📊
-Block Height: 96,637
-RandomX (Tari) Hash Rate: 217 MH/s
-RandomX (Merged-Mined XMR) Hash Rate: 3.49 GH/s
-SHA3x Hash Rate: 47.1 TH/s
+Block Height: 172,999
+RandomX (Tari): 136 MH
+RandomX (Merged-Mined XMR): 4.33 GH
+SHA3x: 648 TH
+Cuckaroo 29: 129 Kg
 
 Want to learn more? Try '/faq mining' to get information about mining Tari. 
 --------------------------------------------------
-Channel: tariproject | User: efaykue_bot | Date: 2025-09-18 12:00:25
+Channel: tariproject | User: None | Date: 2026-01-04 10:07:11
+Message: Hi, it will be available for 2 weeks (Replying to: Is the monthly claiming available on 2-3-4 January 2026? Thanks)
+--------------------------------------------------
+Channel: tariproject | User: None | Date: 2026-01-04 10:07:19
+Message: You can see the counter on TU 
+--------------------------------------------------
+Channel: tariproject | User: None | Date: 2026-01-04 10:48:16
+Message: Just checked and a rtx 4090 gives 16g/s? 
+--------------------------------------------------
+Channel: tariproject | User: None | Date: 2026-01-04 10:48:35
+Message: If Cuckaroo is at 150kg/s 
+--------------------------------------------------
+Channel: tariproject | User: None | Date: 2026-01-04 10:49:08
+Message: Then network is running almost 9000gpus of rtx 4090 in calculations?? 
+--------------------------------------------------
+Channel: tariproject | User: None | Date: 2026-01-04 10:49:46
+Message: That’s a network hardware value of almost 12mil usd just on the cuckaroo29 side nevermind the other lanes 
+--------------------------------------------------
+Channel: tariproject | User: None | Date: 2026-01-04 11:26:02
+Message: For a Rx 590 8gb gpu in Cuckaroo algo what can the hashrste? Currently getting 2.3ghs 
+--------------------------------------------------
+Channel: tariproject | User: None | Date: 2026-01-04 11:35:31
+Message: So for arguement sakes, if network is at 150kg/s, that’s 150,000kg/s
+
+150,000/2.3 =65,000 RX 590 gpus 
+--------------------------------------------------
+Channel: tariproject | User: None | Date: 2026-01-04 11:35:40
+Message: That’s impressive for a 6mil market cap coin 
+--------------------------------------------------
+Channel: tariproject | User: None | Date: 2026-01-04 11:36:09
+Message: I just crunched the numbers and the network is running on total around 20mil USD worth of hardware 
+--------------------------------------------------
+Channel: tariproject | User: None | Date: 2026-01-04 11:36:18
+Message: 3x its market cap 
+--------------------------------------------------
+Channel: tariproject | User: None | Date: 2026-01-04 11:48:46
+Message: I would rather calc with the 6.x g/s of a 3070 or 3060 ti... or the 14 g/s of a 9070... the Nvidia x090 cards are way to expensive. My guess is that most of the network runs on gpus bought 2019 - 2022 that are kind of payed of already (Replying to: Then network is running almost 9000gpus of rtx 4090 in calculations??)
+--------------------------------------------------
+Channel: tariproject | User: efaykue_bot | Date: 2026-01-04 12:00:00
 Message: 📊 Current Tari Network Stats 📊
-Block Height: 96,637
-RandomX (Tari) Hash Rate: 217 MH/s
-RandomX (Merged-Mined XMR) Hash Rate: 3.49 GH/s
-SHA3x Hash Rate: 47.1 TH/s
+Block Height: 173,088
+RandomX (Tari): 156 MH
+RandomX (Merged-Mined XMR): 4.09 GH
+SHA3x: 677 TH
+Cuckaroo 29: 124 Kg
 
 Want to learn more? Try '/faq mining' to get information about mining Tari. 
 --------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 12:03:30
-Message: dear faqqer bot 👆- update your code to show c29 
+Channel: tariproject | User: None | Date: 2026-01-04 14:19:41
+Message: One question 
 --------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 12:03:57
-Message: Yah we will, thanks (Replying to: dear faqqer bot 👆- update your code to show c29)
+Channel: tariproject | User: None | Date: 2026-01-04 14:19:57
+Message: Buyer (Replying to: Unknown message)
 --------------------------------------------------
-Channel: OrderOfSoon | User: None | Date: 2025-09-18 12:26:24
-Message: Media message 
+Channel: tariproject | User: None | Date: 2026-01-04 14:19:59
+Message: How to 
 --------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 12:43:57
-Message: one hour later - heehee - more xtm 
+Channel: tariproject | User: None | Date: 2026-01-04 14:20:07
+Message: Make a new 
 --------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 13:07:42
-Message: The trick to mining Tari c29 is to be streaming Andor at the same time you are mining and on the same gpu - then and only then does Tari jedi power work 
+Channel: tariproject | User: None | Date: 2026-01-04 14:20:12
+Message: Wallet? 
 --------------------------------------------------
-Channel: tariproject | User: possumously | Date: 2025-09-18 14:08:08
-Message: 🚀 TARI UNIVERSE v1.6.1: Hotfix — The Kingdom of All Waters Part 2
-
-🔄 Rolling out via auto-update
-
-Hey Tari fam,
-
-🐓 Following up on the workaround we shared before the hard fork at block 95,000: this hotfix resolves the C29 pool address bug. If you didn't manage to apply the workaround in time, no worries—LuckyPool temporarily redirected the SHA-3 pool to C29 so you didn't miss out. With this update, Tari Universe now automatically defaults to the correct C29 pool address.
-
-✨ WHAT'S FIXED
-
-- 🎯 Correct C29 Pool Connection – Tari Universe now automatically connects to the right Cuckaroo29 pool address without any manual setup needed.
-- ⚡ Faster GPU Switching  – When your GPU needs to switch miners, it now happens in 3 minutes instead of 30. 
-- 🔧 Smarter GPU Management – Better fallback logic means if one GPU miner isn't working, the app intelligently switches to the best alternative for your hardware.
-- 🌐 Pool Stats Fix – Fixed the SHA-3x pool stats display so you can track your mining progress accurately.
-
-Back to mining, everyone! 💜🐢
-
-📥 Download Now:
-🔗 https://tari.com/ 
+Channel: tariproject | User: None | Date: 2026-01-04 14:20:34
+Message: Download 
 --------------------------------------------------
-Channel: tariproject | User: possumously | Date: 2025-09-18 14:08:12
-Message: Media message (Replying to: 🚀 TARI UNIVERSE v1.6.1: Hotfix — The Kingdom of All Waters Part 2
-
-🔄 Rolling out via auto-update
-
-Hey Tari fam,
-
-🐓 Following up on the workaround we shared before the hard fork at block 95,000: this hotfix resolves the C29 pool address bug. If you didn't manage to apply the workaround in time, no worries—LuckyPool temporarily redirected the SHA-3 pool to C29 so you didn't miss out. With this update, Tari Universe now automatically defaults to the correct C29 pool address.
-
-✨ WHAT'S FIXED
-
-- 🎯 Correct C29 Pool Connection – Tari Universe now automatically connects to the right Cuckaroo29 pool address without any manual setup needed.
-- ⚡ Faster GPU Switching  – When your GPU needs to switch miners, it now happens in 3 minutes instead of 30. 
-- 🔧 Smarter GPU Management – Better fallback logic means if one GPU miner isn't working, the app intelligently switches to the best alternative for your hardware.
-- 🌐 Pool Stats Fix – Fixed the SHA-3x pool stats display so you can track your mining progress accurately.
-
-Back to mining, everyone! 💜🐢
-
-📥 Download Now:
-🔗 https://tari.com/)
+Channel: tariproject | User: None | Date: 2026-01-04 14:20:56
+Message: Tari universe 
 --------------------------------------------------
-Channel: OrderOfSoon | User: possumously | Date: 2025-09-18 14:08:23
-Message: 🚀 TARI UNIVERSE v1.6.1: Hotfix — The Kingdom of All Waters Part 2
-
-🔄 Rolling out via auto-update
-
-Hey Tari fam,
-
-🐓 Following up on the workaround we shared before the hard fork at block 95,000: this hotfix resolves the C29 pool address bug. If you didn't manage to apply the workaround in time, no worries—LuckyPool temporarily redirected the SHA-3 pool to C29 so you didn't miss out. With this update, Tari Universe now automatically defaults to the correct C29 pool address.
-
-✨ WHAT'S FIXED
-
-- 🎯 Correct C29 Pool Connection – Tari Universe now automatically connects to the right Cuckaroo29 pool address without any manual setup needed.
-- ⚡ Faster GPU Switching  – When your GPU needs to switch miners, it now happens in 3 minutes instead of 30. 
-- 🔧 Smarter GPU Management – Better fallback logic means if one GPU miner isn't working, the app intelligently switches to the best alternative for your hardware.
-- 🌐 Pool Stats Fix – Fixed the SHA-3x pool stats display so you can track your mining progress accurately.
-
-Back to mining, everyone! 💜🐢
-
-📥 Download Now:
-🔗 https://tari.com/ 
+Channel: tariproject | User: None | Date: 2026-01-04 14:21:12
+Message: On mobile you can logout from your previous wallet and create a new one (Replying to: Make a new)
 --------------------------------------------------
-Channel: OrderOfSoon | User: possumously | Date: 2025-09-18 14:08:29
-Message: Media message (Replying to: 🚀 TARI UNIVERSE v1.6.1: Hotfix — The Kingdom of All Waters Part 2
-
-🔄 Rolling out via auto-update
-
-Hey Tari fam,
-
-🐓 Following up on the workaround we shared before the hard fork at block 95,000: this hotfix resolves the C29 pool address bug. If you didn't manage to apply the workaround in time, no worries—LuckyPool temporarily redirected the SHA-3 pool to C29 so you didn't miss out. With this update, Tari Universe now automatically defaults to the correct C29 pool address.
-
-✨ WHAT'S FIXED
-
-- 🎯 Correct C29 Pool Connection – Tari Universe now automatically connects to the right Cuckaroo29 pool address without any manual setup needed.
-- ⚡ Faster GPU Switching  – When your GPU needs to switch miners, it now happens in 3 minutes instead of 30. 
-- 🔧 Smarter GPU Management – Better fallback logic means if one GPU miner isn't working, the app intelligently switches to the best alternative for your hardware.
-- 🌐 Pool Stats Fix – Fixed the SHA-3x pool stats display so you can track your mining progress accurately.
-
-Back to mining, everyone! 💜🐢
-
-📥 Download Now:
-🔗 https://tari.com/)
+Channel: tariproject | User: None | Date: 2026-01-04 14:21:32
+Message: On desktop you get go to general settings and reset TU (by generating new wallet) 
 --------------------------------------------------
-Channel: OrderOfSoon | User: efaykue_bot | Date: 2025-09-18 15:00:42
+Channel: tariproject | User: None | Date: 2026-01-04 14:22:03
+Message: 👍🏻 
+--------------------------------------------------
+Channel: tariproject | User: efaykue_bot | Date: 2026-01-04 15:00:21
 Message: 📊 Current Tari Network Stats 📊
-Block Height: 96,751
-RandomX (Tari) Hash Rate: 240 MH/s
-RandomX (Merged-Mined XMR) Hash Rate: 3.69 GH/s
-SHA3x Hash Rate: 45.1 TH/s
+Block Height: 173,175
+RandomX (Tari): 152 MH
+RandomX (Merged-Mined XMR): 3.84 GH
+SHA3x: 692 TH
+Cuckaroo 29: 109 Kg
 
 Want to learn more? Try '/faq mining' to get information about mining Tari. 
 --------------------------------------------------
-Channel: tariproject | User: efaykue_bot | Date: 2025-09-18 15:00:43
+Channel: tariproject | User: None | Date: 2026-01-04 15:10:02
+Message: Сегодня совершил первую покупку тари на мексе.
+С Новым Годом💫💫💫 (Replying to: Unknown message)
+--------------------------------------------------
+Channel: tariproject | User: None | Date: 2026-01-04 15:10:58
+Message: Спасибо! И тебя с Новым Годом! (Replying to: Сегодня совершил первую покупку тари на мексе.
+С Новым Годом💫💫💫)
+--------------------------------------------------
+Channel: tariproject | User: None | Date: 2026-01-04 15:12:13
+Message: Поздравляю! На Мексе сейчас хорошая ликвидность и предложение хорошее, для покупки хорошее время! (Replying to: Сегодня совершил первую покупку тари на мексе.
+С Новым Годом💫💫💫)
+--------------------------------------------------
+Channel: tariproject | User: efaykue_bot | Date: 2026-01-04 18:00:09
 Message: 📊 Current Tari Network Stats 📊
-Block Height: 96,751
-RandomX (Tari) Hash Rate: 240 MH/s
-RandomX (Merged-Mined XMR) Hash Rate: 3.69 GH/s
-SHA3x Hash Rate: 45.1 TH/s
+Block Height: 173,274
+RandomX (Tari): 153 MH
+RandomX (Merged-Mined XMR): 4.03 GH
+SHA3x: 702 TH
+Cuckaroo 29: 126 Kg
 
 Want to learn more? Try '/faq mining' to get information about mining Tari. 
 --------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 15:24:37
-Message: When will the deposit be activated? 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 16:01:23
-Message: Is it true that pantera capital is a Tari investor? 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 17:26:01
-Message: Yes, check Pantera's portfolio on their website (Replying to: Is it true that pantera capital is a Tari investor?)
---------------------------------------------------
-Channel: tariproject | User: efaykue_bot | Date: 2025-09-18 18:00:00
+Channel: tariproject | User: efaykue_bot | Date: 2026-01-04 21:00:57
 Message: 📊 Current Tari Network Stats 📊
-Block Height: 96,842
-RandomX (Tari) Hash Rate: 241 MH/s
-RandomX (Merged-Mined XMR) Hash Rate: 3.66 GH/s
-SHA3x Hash Rate: 45.0 TH/s
+Block Height: 173,369
+RandomX (Tari): 156 MH
+RandomX (Merged-Mined XMR): 4.21 GH
+SHA3x: 737 TH
+Cuckaroo 29: 122 Kg
 
 Want to learn more? Try '/faq mining' to get information about mining Tari. 
 --------------------------------------------------
-Channel: OrderOfSoon | User: efaykue_bot | Date: 2025-09-18 18:00:00
+Channel: tariproject | User: None | Date: 2026-01-04 23:09:34
+Message: Тари не пришли на кошелек после клейма уже 12 часов прошло... 
+--------------------------------------------------
+Channel: tariproject | User: None | Date: 2026-01-04 23:10:17
+Message: dm me please i’ll help you get this sorted (Replying to: Тари не пришли на кошелек после клейма уже 12 часов прошло...)
+--------------------------------------------------
+Channel: tariproject | User: efaykue_bot | Date: 2026-01-05 00:00:14
 Message: 📊 Current Tari Network Stats 📊
-Block Height: 96,842
-RandomX (Tari) Hash Rate: 241 MH/s
-RandomX (Merged-Mined XMR) Hash Rate: 3.66 GH/s
-SHA3x Hash Rate: 45.0 TH/s
+Block Height: 173,464
+RandomX (Tari): 152 MH
+RandomX (Merged-Mined XMR): 4.18 GH
+SHA3x: 719 TH
+Cuckaroo 29: 139 Kg
 
 Want to learn more? Try '/faq mining' to get information about mining Tari. 
 --------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 18:29:52
-Message: What are the differences between it and a regular block? (Replying to: Unknown message)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 18:42:10
-Message: No Money.. (Replying to: What are the differences between it and a regular block?)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 19:10:55
-Message: Still pending from tuesday 😢 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 20:14:54
-Message: Are there significant liquidity problems? 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 20:15:17
-Message: It'll be going out shortly, UTXO's are processing right now. (Replying to: Still pending from tuesday 😢)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 20:15:48
-Message: Forgot that specific wallet instance wasn't using the global install. :)  Just fixed it. 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 20:25:37
-Message: thanks sir (Replying to: Forgot that specific wallet instance wasn't using the global install. :)  Just fixed it.)
---------------------------------------------------
-Channel: tariproject | User: efaykue_bot | Date: 2025-09-18 20:46:35
-Message: The question seems to be missing. Please use the format '/faq <type your question inline>'. For example, '/faq What is Tari Universe?' 
---------------------------------------------------
-Channel: tariproject | User: efaykue_bot | Date: 2025-09-18 21:00:17
+Channel: tariproject | User: efaykue_bot | Date: 2026-01-05 03:00:32
 Message: 📊 Current Tari Network Stats 📊
-Block Height: 96,925
-RandomX (Tari) Hash Rate: 223 MH/s
-RandomX (Merged-Mined XMR) Hash Rate: 4.21 GH/s
-SHA3x Hash Rate: 44.3 TH/s
+Block Height: 173,551
+RandomX (Tari): 160 MH
+RandomX (Merged-Mined XMR): 3.85 GH
+SHA3x: 739 TH
+Cuckaroo 29: 146 Kg
 
 Want to learn more? Try '/faq mining' to get information about mining Tari. 
 --------------------------------------------------
-Channel: OrderOfSoon | User: efaykue_bot | Date: 2025-09-18 21:00:17
+Channel: tariproject | User: efaykue_bot | Date: 2026-01-05 03:42:53
+Message: If you're having trouble logging into your Tari airdrop page, please ensure that you are using the correct credentials. If the issue persists, it may be a technical problem, and I recommend reaching out to the support staff for further assistance. (Replying to: Unknown message)
+--------------------------------------------------
+Channel: tariproject | User: efaykue_bot | Date: 2026-01-05 03:43:19
+Message: If you are looking for support or have specific questions, you can join the Tari Discord server or visit the official Tari website at www.tari.com for more resources and contact options. If you need further assistance, your question will be forwarded to support staff for answering. (Replying to: Unknown message)
+--------------------------------------------------
+Channel: tariproject | User: efaykue_bot | Date: 2026-01-05 03:45:13
+Message: The question will be forwarded to support staff for answering. (Replying to: Unknown message)
+--------------------------------------------------
+Channel: tariproject | User: efaykue_bot | Date: 2026-01-05 03:45:46
+Message: If you are asking whether your question has been forwarded to support staff, please note that I am unable to track the status of specific questions being forwarded. If you have a specific query or concern, please provide more details, and I will do my best to assist you or forward it to the support staff if necessary. (Replying to: Unknown message)
+--------------------------------------------------
+Channel: tariproject | User: None | Date: 2026-01-05 04:11:53
+Message: Wallet sync on mobile is so much faster now 
+--------------------------------------------------
+Channel: tariproject | User: efaykue_bot | Date: 2026-01-05 06:00:49
 Message: 📊 Current Tari Network Stats 📊
-Block Height: 96,925
-RandomX (Tari) Hash Rate: 223 MH/s
-RandomX (Merged-Mined XMR) Hash Rate: 4.21 GH/s
-SHA3x Hash Rate: 44.3 TH/s
+Block Height: 173,624
+RandomX (Tari): 173 MH
+RandomX (Merged-Mined XMR): 3.31 GH
+SHA3x: 745 TH
+Cuckaroo 29: 126 Kg
 
 Want to learn more? Try '/faq mining' to get information about mining Tari. 
 --------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 21:19:54
-Message: I'm shocked, it takes 95%. Is this an ASIC? kryptex...  xtm-c29/miner/stats/124PBV5msnDLCexdgcRnxe2Sy7szQb5nU1Y2nNAGf3kurQ7DyZdMroXtFGJKzTv6TLHzV4qPUj67iTT4ty63XiSLkfk 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 21:35:21
-Message: Wasnt Tari on TO before? Theres now official news that it was the canadian police who took it down 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 21:41:12
-Message: This undermines trust in the project! Why do the developers need the other miners? Let them go get coffee together... (Replying to: I'm shocked, it takes 95%. Is this an ASIC? kryptex...  xtm-c29/miner/stats/124PBV5msnDLCexdgcRnxe2Sy7szQb5nU1Y2nNAGf3kurQ7DyZdMroXtFGJKzTv6TLHzV4qPUj67iTT4ty63XiSLkfk)
---------------------------------------------------
-Channel: OrderOfSoon | User: efaykue_bot | Date: 2025-09-18 22:57:58
+Channel: tariproject | User: efaykue_bot | Date: 2026-01-05 09:00:07
 Message: 📊 Current Tari Network Stats 📊
-Block Height: 96,980
-RandomX (Tari) Hash Rate: 212 MH/s
-RandomX (Merged-Mined XMR) Hash Rate: 3.99 GH/s
-SHA3x Hash Rate: 43.8 TH/s
-
-Want to learn more? Try '/faq mining' to get information about mining Tari. 
---------------------------------------------------
-Channel: tariproject | User: efaykue_bot | Date: 2025-09-18 22:57:59
-Message: 📊 Current Tari Network Stats 📊
-Block Height: 96,980
-RandomX (Tari) Hash Rate: 212 MH/s
-RandomX (Merged-Mined XMR) Hash Rate: 3.99 GH/s
-SHA3x Hash Rate: 43.8 TH/s
-
-Want to learn more? Try '/faq mining' to get information about mining Tari. 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 23:01:20
-Message: When will it be possible to make money from this or is this another scam? 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 23:01:44
-Message: not sure what youre saying here. C29 is for GPU miners (generally speaking) (Replying to: This undermines trust in the project! Why do the developers need the other miners? Let them go get coffee together...)
---------------------------------------------------
-Channel: OrderOfSoon | User: efaykue_bot | Date: 2025-09-18 23:01:56
-Message: 📊 Current Tari Network Stats 📊
-Block Height: 96,982
-RandomX (Tari) Hash Rate: 212 MH/s
-RandomX (Merged-Mined XMR) Hash Rate: 4.02 GH/s
-SHA3x Hash Rate: 43.9 TH/s
-
-Want to learn more? Try '/faq mining' to get information about mining Tari. 
---------------------------------------------------
-Channel: tariproject | User: efaykue_bot | Date: 2025-09-18 23:01:57
-Message: 📊 Current Tari Network Stats 📊
-Block Height: 96,982
-RandomX (Tari) Hash Rate: 212 MH/s
-RandomX (Merged-Mined XMR) Hash Rate: 4.02 GH/s
-SHA3x Hash Rate: 43.9 TH/s
-
-Want to learn more? Try '/faq mining' to get information about mining Tari. 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 23:01:58
-Message: its not a scam. Mainnet launched 5 months ago. Patience is needed as the network grows 🙂 (Replying to: When will it be possible to make money from this or is this another scam?)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 23:02:13
-Message: Haha beat me to it (Replying to: its not a scam. Mainnet launched 5 months ago. Patience is needed as the network grows 🙂)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 23:06:49
-Message: Wait until the dollar depreciates, that's stupid. 
---------------------------------------------------
-Channel: tariproject | User: efaykue_bot | Date: 2025-09-18 23:08:00
-Message: 📊 Current Tari Network Stats 📊
-Block Height: 96,984
-RandomX (Tari): 212 MH/s
-RandomX (Merged-Mined XMR): 4.05 GH/s
-SHA3x: 44.1 TH/s
-Cuckaroo 29: 119 kgraphs
-
-Want to learn more? Try '/faq mining' to get information about mining Tari. 
---------------------------------------------------
-Channel: OrderOfSoon | User: efaykue_bot | Date: 2025-09-18 23:08:00
-Message: 📊 Current Tari Network Stats 📊
-Block Height: 96,984
-RandomX (Tari): 212 MH/s
-RandomX (Merged-Mined XMR): 4.05 GH/s
-SHA3x: 44.1 TH/s
-Cuckaroo 29: 119 kgraphs
-
-Want to learn more? Try '/faq mining' to get information about mining Tari. 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 23:08:16
-Message: I need dollars to buy new video cards. 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 23:10:11
-Message: Electricity isn't free either, and the internet costs $70 a month. 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 23:17:15
-Message: I have a question: 1,500 people in a pool found 50 blocks in a day, and one person, solo, with 50% of the network's power, takes most of the blocks... What can we earn in a pool, and especially solo? (Replying to: not sure what youre saying here. C29 is for GPU miners (generally speaking))
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 23:18:20
-Message: `Ethereum mining was profitable, video cards paid for themselves, gold could be bought, even electricity and equipment, but now I have to invest my own money in mining and wait for the dollar to depreciate and the cryptocurrency to rise – complete nonsense.` 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 23:22:06
-Message: C29 is the evil that will destroy everything. Find a solution to protect against FPGA. 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 23:32:52
-Message: User 124PBV5msnDLCexdgcRnxe2Sy7szQb5nU1Y2nNAGf3kurQ7DyZdMroXtFGJKzTv6TLHzV4qPUj67iTT4ty63XiSLkfk - This worker has a hashrate of 57.80 KH/s, the entire pool hashrate is 100 KH/s. Are you telling me this is GPU mining? A total of 10,000 RTX 3070 on a single card. 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 23:33:08
-Message: If you get a job and buy crypto with every paycheck, or trade it to earn more, this mining is nonsense and a waste of time. 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 23:41:51
-Message: If you get a job in construction, you can earn an average of $7,000–$6,000 per month, and if you work in a coal mine, you can earn around $60 per hour. You can work longer than the standard eight-hour shifts and earn more, as well as buy cryptocurrency or Bitcoin. 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 23:46:56
-Message: Does anything bother you about this situation? 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 23:48:35
-Message: people can allocate whatever GPU power they want to the network. We will look at whats happening here but this is also a 3rd party pool and we dont know how its being managed etc. @possumously fyi (Replying to: User 124PBV5msnDLCexdgcRnxe2Sy7szQb5nU1Y2nNAGf3kurQ7DyZdMroXtFGJKzTv6TLHzV4qPUj67iTT4ty63XiSLkfk - This worker has a hashrate of 57.80 KH/s, the entire pool hashrate is 100 KH/s. Are you telling me this is GPU mining? A total of 10,000 RTX 3070 on a single card.)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 23:48:56
-Message: thats what people said about BTC mining at the beginning too 🙂 (Replying to: If you get a job and buy crypto with every paycheck, or trade it to earn more, this mining is nonsense and a waste of time.)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 23:50:24
-Message: Why mislead by talking about decentralization when all your eggs are in one basket? (Replying to: people can allocate whatever GPU power they want to the network. We will look at whats happening here but this is also a 3rd party pool and we dont know how its being managed etc. @possumously fyi)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 23:54:36
-Message: yeah, what I mean is I have to pay for my equipment and electricity and wait because I'm no longer making money on mining since Ethereum went away (Replying to: thats what people said about BTC mining at the beginning too 🙂)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 23:54:57
-Message: Was pretty excited for Tari.. shame there have been so many issues. 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 23:55:08
-Message: Tari has 4 lanes for mining:
-
-RandomX - merge mine with XMR
-RandomX - solo mine Tari
-SHA3
-C29
-
-Not sure what youre talking about here. You'd have to look at all lanes to determine if there is a centralization challenge. There are so many folks mining Tari across all these lanes. (Replying to: Why mislead by talking about decentralization when all your eggs are in one basket?)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 23:55:21
-Message: what issues? (Replying to: Was pretty excited for Tari.. shame there have been so many issues.)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 23:55:40
-Message: sure mining is a bet on the network (Replying to: yeah, what I mean is I have to pay for my equipment and electricity and wait because I'm no longer making money on mining since Ethereum went away)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 23:56:08
-Message: Please look into the situation, this is very suspicious and not realistic for an ordinary home miner. (Replying to: people can allocate whatever GPU power they want to the network. We will look at whats happening here but this is also a 3rd party pool and we dont know how its being managed etc. @possumously fyi)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 23:56:11
-Message: TU has had constant issues since launch (Replying to: what issues?)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 23:56:31
-Message: what issues are you facing? We've reduced error rates on Tari Universe by over 90% over the last 6 weeks (Replying to: TU has had constant issues since launch)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 23:57:07
-Message: Check pin (Replying to: what issues are you facing? We've reduced error rates on Tari Universe by over 90% over the last 6 weeks)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 23:57:49
-Message: Im aware of the pin :), what is the issue with it? We are making updates and adjustments all the time. Its not perfect, but saying it has a lot of issues isn't accurate when the error rates are objectively down massively 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-18 23:57:54
-Message: Lately I've been working as a house framer and making $11,000 a month, and I also buy and sell Bitcoin and make more than I did mining. 
---------------------------------------------------
-Channel: OrderOfSoon | User: efaykue_bot | Date: 2025-09-19 00:00:01
-Message: 📊 Current Tari Network Stats 📊
-Block Height: 97,014
-RandomX (Tari): 191 MH/s
-RandomX (Merged-Mined XMR): 4.13 GH/s
-SHA3x: 47.4 TH/s
-Cuckaroo 29: 120 Kg
-
-Want to learn more? Try '/faq mining' to get information about mining Tari. 
---------------------------------------------------
-Channel: tariproject | User: efaykue_bot | Date: 2025-09-19 00:00:02
-Message: 📊 Current Tari Network Stats 📊
-Block Height: 97,014
-RandomX (Tari): 191 MH/s
-RandomX (Merged-Mined XMR): 4.13 GH/s
-SHA3x: 47.4 TH/s
-Cuckaroo 29: 120 Kg
-
-Want to learn more? Try '/faq mining' to get information about mining Tari. 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 00:01:25
-Message: Now I'm not working, I decided to take a break, and I'm sitting at home and receiving unemployment benefits, and it's better than mining 😂😂😂 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 00:09:52
-Message: Here's the real cryptocurrency you should have in your pockets. 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 00:09:53
-Message: Media message 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 00:09:53
-Message: Media message 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 00:09:53
-Message: Media message 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 00:09:54
-Message: Media message 
---------------------------------------------------
-Channel: tariproject | User: FYLTHI | Date: 2025-09-19 00:20:12
-Message: I second this - if you haven't stacked some gold, you're doing it wrong (Replying to: Here's the real cryptocurrency you should have in your pockets.)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 01:18:51
-Message: what do i do with gold after I stack it? 
---------------------------------------------------
-Channel: tariproject | User: efaykue_bot | Date: 2025-09-19 03:00:04
-Message: 📊 Current Tari Network Stats 📊
-Block Height: 97,105
-RandomX (Tari): 217 MH/s
-RandomX (Merged-Mined XMR): 4.04 GH/s
-SHA3x: 50.6 TH/s
+Block Height: 173,692
+RandomX (Tari): 145 MH
+RandomX (Merged-Mined XMR): 3.80 GH
+SHA3x: 716 TH
 Cuckaroo 29: 112 Kg
 
 Want to learn more? Try '/faq mining' to get information about mining Tari. 
 --------------------------------------------------
-Channel: OrderOfSoon | User: efaykue_bot | Date: 2025-09-19 03:00:04
+Channel: tariproject | User: efaykue_bot | Date: 2026-01-05 12:00:24
 Message: 📊 Current Tari Network Stats 📊
-Block Height: 97,105
-RandomX (Tari): 217 MH/s
-RandomX (Merged-Mined XMR): 4.04 GH/s
-SHA3x: 50.6 TH/s
-Cuckaroo 29: 112 Kg
+Block Height: 173,783
+RandomX (Tari): 153 MH
+RandomX (Merged-Mined XMR): 4.49 GH
+SHA3x: 712 TH
+Cuckaroo 29: 87.3 Kg
 
 Want to learn more? Try '/faq mining' to get information about mining Tari. 
 --------------------------------------------------
-Channel: tariproject | User: efaykue_bot | Date: 2025-09-19 03:13:10
-Message: The question appears to be incomplete or unclear. Please ensure your question is formatted correctly, for example, '/faq What is Tari Universe?' If you have a specific question about Tari or related topics, feel free to ask! 
---------------------------------------------------
-Channel: tariproject | User: efaykue_bot | Date: 2025-09-19 04:41:43
+Channel: tariproject | User: efaykue_bot | Date: 2026-01-05 13:11:55
 Message: The question seems to be missing or unclear. Please use the format '/faq <type your question inline>'. For example, '/faq What is Tari Universe?' 
 --------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 04:42:46
-Message: Does any one mine using 5060ti? 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 04:46:20
-Message: I have a few 5060s going 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 04:46:29
-Message: and a 5070 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 04:49:09
-Message: How's the daily take? (Replying to: I have a few 5060s going)
---------------------------------------------------
-Channel: tariproject | User: efaykue_bot | Date: 2025-09-19 06:00:06
+Channel: tariproject | User: efaykue_bot | Date: 2026-01-05 15:00:42
 Message: 📊 Current Tari Network Stats 📊
-Block Height: 97,213
-RandomX (Tari): 200 MH/s
-RandomX (Merged-Mined XMR): 4.05 GH/s
-SHA3x: 51.9 TH/s
-Cuckaroo 29: 121 Kg
+Block Height: 173,880
+RandomX (Tari): 139 MH
+RandomX (Merged-Mined XMR): 4.32 GH
+SHA3x: 683 TH
+Cuckaroo 29: 94.6 Kg
 
 Want to learn more? Try '/faq mining' to get information about mining Tari. 
 --------------------------------------------------
-Channel: OrderOfSoon | User: efaykue_bot | Date: 2025-09-19 06:00:06
-Message: 📊 Current Tari Network Stats 📊
-Block Height: 97,213
-RandomX (Tari): 200 MH/s
-RandomX (Merged-Mined XMR): 4.05 GH/s
-SHA3x: 51.9 TH/s
-Cuckaroo 29: 121 Kg
-
-Want to learn more? Try '/faq mining' to get information about mining Tari. 
+Channel: tariproject | User: None | Date: 2026-01-05 16:18:44
+Message: Help, I redeemed my airdrop 2 days ago with confirmation but have yet to receive. I have refreshed wallet a few times, and restarted Tari a few times. Last drop listed in wallet is for Dec 3, and it tells me next drop is in 28D from today. 
 --------------------------------------------------
-Channel: OrderOfSoon | User: efaykue_bot | Date: 2025-09-19 06:07:01
-Message: The question seems to be missing or unclear. Please use the format '/faq <type your question inline>'. For example, '/faq What is Tari Universe?'. 
+Channel: tariproject | User: None | Date: 2026-01-05 16:34:31
+Message: dm me please i’ll look into it for you (Replying to: Help, I redeemed my airdrop 2 days ago with confirmation but have yet to receive. I have refreshed wallet a few times, and restarted Tari a few times. Last drop listed in wallet is for Dec 3, and it tells me next drop is in 28D from today.)
 --------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 06:18:00
-Message: I’m using tari universe on win pc, I have a 5070 ti. It seems that c26 does not work with it. Since, when I activate gpu mining I can’t select the 5070 ti card. 
+Channel: tariproject | User: None | Date: 2026-01-05 16:49:49
+Message: I got the code @Gremster, not sure why the bot is deleting that message 
 --------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 06:28:22
-Message: When using gpu miner on TU what is the pool url on luckypool? Can't get stats with .5118 but if I switch to 6118 I get stats? 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 07:22:17
-Message: Media message (Replying to: When using gpu miner on TU what is the pool url on luckypool? Can't get stats with .5118 but if I switch to 6118 I get stats?)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 07:22:27
-Message: one of those 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 07:23:17
-Message: I have 4gb vram so i use graxil (Replying to: one of those)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 07:24:34
-Message: Media message (Replying to: I have 4gb vram so i use graxil)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 07:26:06
-Message: Why does the Tari universe app say tu.luckypool.io.5118 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 07:34:11
-Message: Different ports to enable lower minimum payment 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 07:35:48
-Message: They get 5-6 g/s, napkin math is like 125 XTM a day or something based on the last 6 hours. Really tired and probably not that accurate because my total g/s fluctuates depending on if I have my main pc mining or not. I'd just give it a go if I were you (Replying to: How's the daily take?)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 07:45:31
-Message: How mine 5070ti in day? 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 07:59:05
-Message: My guess is around 250-275, best to just try it for yourself though (Replying to: How mine 5070ti in day?)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 08:00:34
-Message: the numbers are always changing too so it could be completely different tomorrow lol 
---------------------------------------------------
-Channel: OrderOfSoon | User: efaykue_bot | Date: 2025-09-19 09:00:08
-Message: 📊 Current Tari Network Stats 📊
-Block Height: 97,300
-RandomX (Tari): 192 MH/s
-RandomX (Merged-Mined XMR): 4.82 GH/s
-SHA3x: 53.5 TH/s
-Cuckaroo 29: 135 Kg
-
-Want to learn more? Try '/faq mining' to get information about mining Tari. 
---------------------------------------------------
-Channel: tariproject | User: efaykue_bot | Date: 2025-09-19 09:00:09
-Message: 📊 Current Tari Network Stats 📊
-Block Height: 97,300
-RandomX (Tari): 192 MH/s
-RandomX (Merged-Mined XMR): 4.82 GH/s
-SHA3x: 53.5 TH/s
-Cuckaroo 29: 135 Kg
-
-Want to learn more? Try '/faq mining' to get information about mining Tari. 
---------------------------------------------------
-Channel: tariproject | User: efaykue_bot | Date: 2025-09-19 09:19:25
-Message: The format for interacting with me is '/faq <type your question inline>'. For example, you can ask '/faq What is Tari Universe?'. Please provide your question in this format so I can assist you better. 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 11:30:20
-Message: $XTM on Safetrade withdrawl open & fast 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 11:41:34
-Message: On mexc is blocked yet (Replying to: $XTM on Safetrade withdrawl open & fast)
---------------------------------------------------
-Channel: OrderOfSoon | User: yegrace1 | Date: 2025-09-19 11:59:02
-Message: Wish y’all a great weekend 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 11:59:30
-Message: Coinex you can trade tari 
---------------------------------------------------
-Channel: OrderOfSoon | User: efaykue_bot | Date: 2025-09-19 12:00:10
-Message: 📊 Current Tari Network Stats 📊
-Block Height: 97,386
-RandomX (Tari): 189 MH/s
-RandomX (Merged-Mined XMR): 4.97 GH/s
-SHA3x: 54.9 TH/s
-Cuckaroo 29: 142 Kg
-
-Want to learn more? Try '/faq mining' to get information about mining Tari. 
---------------------------------------------------
-Channel: tariproject | User: efaykue_bot | Date: 2025-09-19 12:00:11
-Message: 📊 Current Tari Network Stats 📊
-Block Height: 97,386
-RandomX (Tari): 189 MH/s
-RandomX (Merged-Mined XMR): 4.97 GH/s
-SHA3x: 54.9 TH/s
-Cuckaroo 29: 142 Kg
-
-Want to learn more? Try '/faq mining' to get information about mining Tari. 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 12:39:40
-Message: I tried to share a link about tradeogre, but of course the bot destroyed it. Really tired of this. 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 12:41:04
-Message: cointelegraph (dot) com (slash) news (slash) canada-tradeogre-seizure-criticized-theft-innocent-users 
---------------------------------------------------
-Channel: OrderOfSoon | User: None | Date: 2025-09-19 12:49:30
-Message: Th (Replying to: Wish y’all a great weekend)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 13:46:01
-Message: Yes #MEXC still suspended withdrawl (Replying to: On mexc is blocked yet)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 13:47:24
-Message: Not coinex & i'm pleasure with safetrade. Btw $XTM in my Tari wallet done. (Replying to: Coinex you can trade tari)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 13:52:38
-Message: 200 złotych? 😜 (Replying to: Now I'm not working, I decided to take a break, and I'm sitting at home and receiving unemployment benefits, and it's better than mining 😂😂😂)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 13:54:04
-Message: Where can I find those? Looks cool (Replying to: Here's the real cryptocurrency you should have in your pockets.)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 13:54:16
-Message: Why my earning got stucked? 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 13:55:50
-Message: What do you mean by stuck (Replying to: Why my earning got stucked?)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 13:57:38
-Message: im using RX 590 8GB, and minning is running all day. if you check the Reward in Progress its just stopped increasing the reward after 5.8295 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 13:58:26
-Message: Probably you've set CPU mining to zero in custom setting?? (Replying to: Why my earning got stucked?)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 14:00:38
-Message: can anyone suggest the best config which I can try? 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 14:30:55
-Message: cpu is disabled (Replying to: Why my earning got stucked?)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 14:38:50
-Message: Thx for the link - never would have guessed that one! I'm not a criminal , I had some Tari in there, mined and legit, means the RCMP owes me some monies! (Replying to: I tried to share a link about tradeogre, but of course the bot destroyed it. Really tired of this.)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 14:42:18
-Message: payup copper you owe me about 8 cdn dollars 😁 
---------------------------------------------------
-Channel: OrderOfSoon | User: efaykue_bot | Date: 2025-09-19 15:00:12
-Message: 📊 Current Tari Network Stats 📊
-Block Height: 97,463
-RandomX (Tari): 187 MH/s
-RandomX (Merged-Mined XMR): 4.55 GH/s
-SHA3x: 51.4 TH/s
-Cuckaroo 29: 3.14 Kg
-
-Want to learn more? Try '/faq mining' to get information about mining Tari. 
---------------------------------------------------
-Channel: tariproject | User: efaykue_bot | Date: 2025-09-19 15:00:13
-Message: 📊 Current Tari Network Stats 📊
-Block Height: 97,463
-RandomX (Tari): 187 MH/s
-RandomX (Merged-Mined XMR): 4.55 GH/s
-SHA3x: 51.4 TH/s
-Cuckaroo 29: 3.14 Kg
-
-Want to learn more? Try '/faq mining' to get information about mining Tari. 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 15:05:32
-Message: It didnt give something (Replying to: What are the differences between it and a regular block?)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 16:13:12
-Message: For more than 24hrs now, my tari app has been like this. Anyone also encounter this?
-
-I have uninstalled and reinstalled latest version. Same problem. 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 16:14:39
-Message: /settings@null 
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 16:17:59
-Message: @MrMooning please help (Replying to: For more than 24hrs now, my tari app has been like this. Anyone also encounter this?
-
-I have uninstalled and reinstalled latest version. Same problem.)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 16:18:19
-Message: Please submit logs, and send ref code (Replying to: For more than 24hrs now, my tari app has been like this. Anyone also encounter this?
-
-I have uninstalled and reinstalled latest version. Same problem.)
---------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 16:18:20
+Channel: tariproject | User: None | Date: 2026-01-05 16:50:05
 Message: Thank you 
 --------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 16:22:26
-Message: Logs not submitting either. This one isnt new but since i didnt need it, didnt bother. @MrMooning 
+Channel: tariproject | User: None | Date: 2026-01-05 16:53:17
+Message: Airdrop now received 👍 
 --------------------------------------------------
-Channel: tariproject | User: None | Date: 2025-09-19 16:30:25
-Message: Perhaps this is a consequence of the problem I mentioned above. Someone solo mining is simply taking all the blocks, causing the rewards in the pool to approach zero, especially on weaker cards. But it seems the developers aren't interested in solving the problem. (Replying to: im using RX 590 8GB, and minning is running all day. if you check the Reward in Progress its just stopped increasing the reward after 5.8295)
+Channel: tariproject | User: None | Date: 2026-01-05 16:53:29
+Message: Yep 🫡 
 --------------------------------------------------
-Channel: tariproject | User: VitaliRaw | Date: 2025-09-19 16:32:46
-Message: Please confirm or deny my theory. Have you all seen a drop in mining rewards on your cards over the last two days? 
+Channel: tariproject | User: None | Date: 2026-01-05 16:54:14
+Message: @MrMooning thanks mate 
+--------------------------------------------------
+Channel: tariproject | User: efaykue_bot | Date: 2026-01-05 18:00:00
+Message: 📊 Current Tari Network Stats 📊
+Block Height: 173,968
+RandomX (Tari): 140 MH
+RandomX (Merged-Mined XMR): 3.98 GH
+SHA3x: 659 TH
+Cuckaroo 29: 110 Kg
+
+Want to learn more? Try '/faq mining' to get information about mining Tari. 
+--------------------------------------------------
+Channel: tariproject | User: None | Date: 2026-01-05 18:23:40
+Message: is there a delay on the 2nd round of airdrop claims? I claimed but I don't see the xtm in my wallet? 
+--------------------------------------------------
+Channel: tariproject | User: None | Date: 2026-01-05 18:32:15
+Message: give it a bit longer it’ll come through :) (Replying to: is there a delay on the 2nd round of airdrop claims? I claimed but I don't see the xtm in my wallet?)
+--------------------------------------------------
+Channel: tariproject | User: None | Date: 2026-01-05 18:45:55
+Message: How to check how much xtm i have? 
+--------------------------------------------------
+Channel: tariproject | User: None | Date: 2026-01-05 18:47:18
+Message: log into Tari Universe and check your wallet (Replying to: How to check how much xtm i have?)
+--------------------------------------------------
+Channel: tariproject | User: None | Date: 2026-01-05 18:48:26
+Message: Thanks. On wjich cex is it listed? (Replying to: log into Tari Universe and check your wallet)
+--------------------------------------------------
+Channel: tariproject | User: None | Date: 2026-01-05 18:48:50
+Message: Or how can i sell them 
+--------------------------------------------------
+Channel: tariproject | User: None | Date: 2026-01-05 18:49:12
+Message: you can see all the listed exchanges on CMC (Replying to: Thanks. On wjich cex is it listed?)
+--------------------------------------------------
+Channel: tariproject | User: None | Date: 2026-01-05 18:49:53
+Message: Its now MinoTari? (Replying to: you can see all the listed exchanges on CMC)
+--------------------------------------------------
+Channel: tariproject | User: None | Date: 2026-01-05 19:51:19
+Message: Minotari is the name of XTM (the L1 token) (Replying to: Its now MinoTari?)
 --------------------------------------------------
