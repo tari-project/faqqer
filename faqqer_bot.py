@@ -38,6 +38,9 @@ api_hash = os.getenv('TELEGRAM_API_HASH')  # From Telegram Developer Portal
 # Initialize the Telegram bot client (don't start it yet)
 client = TelegramClient('bot', api_id, api_hash)
 
+FAQ_COMMANDS = {"ask", "faq", "faqqer"}
+BOT_USERNAME = "faqqer"
+
 # Load the FAQ from the uploaded text file
 faq_file_path = os.path.join('faqs', 'faq_prompt.txt')
 
@@ -227,12 +230,75 @@ def find_faq_answer(question):
     return answer
 
 
+def get_meta_reply(question):
+    """Return a direct bot-presence reply for meta prompts, otherwise None."""
+    normalized = question.lower().strip()
+    presence_markers = [
+        "are you there",
+        "are you online",
+        "are you active",
+        "can you answer",
+        "can you reply",
+        "do you answer",
+        "do you work",
+        "are you working",
+        "test",
+        "hello",
+        "hi",
+        "hey",
+    ]
+
+    if any(marker in normalized for marker in presence_markers):
+        return "Yes, I'm here and I can answer direct questions. Ask me anything about Tari, mining, wallets, or network stats."
+
+    return None
+
+
+def extract_faq_question(event):
+    """Return parsed FAQ question or None when the message is not for FAQQer."""
+    message_text = (event.raw_text or "").strip()
+    if not message_text:
+        return None
+
+    if message_text.startswith('/'):
+        command_match = re.match(r'^/(\w+)(?:@\w+)?(?:\s+(.*))?$', message_text, re.DOTALL)
+        if not command_match:
+            return None
+
+        command = command_match.group(1).lower()
+        if command not in FAQ_COMMANDS:
+            return None
+
+        return (command_match.group(2) or "").strip()
+
+    # In groups/channels, require an explicit mention to avoid noisy auto-replies.
+    if not (event.is_group or event.is_channel):
+        return None
+
+    mention_token = f"@{BOT_USERNAME.lower()}"
+    normalized_text = message_text.lower()
+    if not event.message.mentioned and mention_token not in normalized_text:
+        return None
+
+    mention_pattern = re.compile(rf'(?i)@{re.escape(BOT_USERNAME)}\\b')
+    question_text = mention_pattern.sub('', message_text).strip(" ,:-")
+    if question_text == message_text and mention_token in normalized_text:
+        question_text = message_text.replace(mention_token, '').strip(" ,:-")
+
+    return question_text
+
+
 
 # Telegram bot event handler
-@client.on(events.NewMessage(pattern=r'/(ask|faq|faqqer)'))
-async def handler(event):
-    # Extract the user's question from the message
-    user_message = event.message.text[len('/ask '):]
+@client.on(events.NewMessage)
+async def faq_handler(event):
+    user_message = extract_faq_question(event)
+    if user_message is None:
+        return
+
+    if not user_message:
+        await event.reply("If you have a question, please use the format '/faq <type your question inline>'. For example, '/faq What is Tari Universe?' This will help me provide the most accurate response.")
+        return
     
     # Check if it's a request for hash rates information
     if user_message.lower().strip() == "hash rates" or user_message.lower().strip() == "hashrates" or user_message.lower().strip() == "hash rate":
@@ -240,6 +306,12 @@ async def handler(event):
         # Directly call the post_hash_power function to get an immediate update
         from blockchain_job import post_hash_power
         await post_hash_power(client)
+        return
+
+    # Handle simple presence/meta prompts locally for a natural bot UX.
+    meta_reply = get_meta_reply(user_message)
+    if meta_reply:
+        await event.reply(meta_reply)
         return
     
     # Search the FAQ for a relevant answer
@@ -328,12 +400,14 @@ async def version_handler(event):
 
 **Commands:**
 • `/faq <question>` - Ask a question
+• `@faqqer <question>` - Ask in group chats by mentioning the bot
 • `/version` - Show version info
 • `/refresh_faq` - Refresh FAQ content
 • `/analyze_support [hours] [question]` - Run customer analysis
 • `/channel_info` - Show channel subscriptions
 
 **Examples:**
+• `@faqqer how do I mine Tari?` - Mention-based group question
 • `/analyze_support` - Default 3-hour analysis
 • `/analyze_support 6` - 6-hour analysis
 • `/analyze_support wallet issues` - Focus on wallet issues (3 hours)
@@ -370,9 +444,14 @@ async def channel_info_handler(event):
 
 # Main execution function
 async def main():
+    global BOT_USERNAME
+
     # Start the Telegram client
     await client.start(bot_token=bot_token)
+    me = await client.get_me()
+    BOT_USERNAME = (me.username or BOT_USERNAME).lower()
     logging.info(f"FAQQer Bot v{FAQQER_VERSION} (Build: {BUILD_DATE}) - Telegram client started successfully")
+    logging.info(f"FAQ triggers enabled: /faq, /ask, /faqqer and @{BOT_USERNAME} in groups")
     
     # Print version and FAQ content for debugging
     print("\n" + "="*80)
@@ -399,7 +478,7 @@ async def main():
     #schedule_customer_analysis_job(client, asyncio.get_event_loop())  # Customer service analysis every 3 hours
     
     # Start the Telegram bot
-    logging.info(f"FAQQer Bot v{FAQQER_VERSION} is running with hourly FAQ refresh and hash power monitoring...")
+    logging.info(f"FAQQer Bot v{FAQQER_VERSION} is running with hourly FAQ refresh, twice-daily hash power monitoring, and mention-triggered FAQ responses...")
     await client.run_until_disconnected()
 
 # Run the main function
