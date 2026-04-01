@@ -137,7 +137,7 @@ async def post_hash_power(client):
             f"RandomX (Merged-Mined XMR): {formatted_rxm_hash_rate}\n"
             f"SHA3x: {formatted_sha_hash_rate}\n"
             f"Cuckaroo 29: {formatted_cuckaroo_hash_rate}\n\n"
-            f"Want to learn more? Try '/faq mining' to get information about mining Tari."
+            f"Want to learn more? Try '@faqqer mining' to get information about mining Tari."
         )
         
         # Loop over the group IDs and send the message
