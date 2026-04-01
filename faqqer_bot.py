@@ -173,7 +173,7 @@ async def list_channels(client):
 def query_openai_gpt(system, faq_avoidance_text, prompt):
 
     system = system + "\n\nDo not talk about the following topics:\n" + faq_avoidance_text + \
-             "\n\nIf you do not know the answer with certainty, tell the user that their question will be forwarded to support staff for answering.\n\nIf the questions seems missing, remind the user that the format for interacting with you is '/faq <type your question inline>'. Give an example, e.g., /faq What is Tari Universe?"
+             "\n\nIf you do not know the answer with certainty, tell the user that their question will be forwarded to support staff for answering.\n\nIf the question seems missing, remind the user that they should address you as @faqqer (efaykue_bot) and ask their question inline. Give an example, e.g., @faqqer What is Tari Universe?"
     try:
         client = OpenAI()
         response = client.chat.completions.create(
