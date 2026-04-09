@@ -1,5 +1,13 @@
 # Faqqer Bot
 
+**DEPRECATION NOTICE: This project is being replaced by a new, self-learning, multi-channel AI Help Bot.**
+
+Please refer to the [Design Document (docs/DESIGN.md)](./docs/DESIGN.md) for details on the new system and its migration plan. The development for the new bot will primarily take place in the [`ai_help_bot/`](./ai_help_bot) directory.
+
+This `Faqqer Bot` will be maintained only for critical bug fixes until the new system is fully operational.
+
+---
+
 A Telegram bot with three core functions:
 
 ## Core Components
@@ -59,3 +67,5 @@ The bot will:
 1. Install dependencies: `pip install -r requirements.txt`
 2. Configure `.env` with Telegram and OpenAI API keys
 3. Run: `python faqqer_bot.py`
+
+**Note:** These instructions are for the legacy Faqqer bot. For information on the new AI Help Bot, see the [Design Document (docs/DESIGN.md)](./docs/DESIGN.md).
