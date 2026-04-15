@@ -25,6 +25,15 @@ _EMPTY_REPLY = (
     "I don't know the answer yet. An admin can teach me by replying to a "
     "good response with /approve."
 )
+# Telegram hard limit for text messages sent via the Bot API.
+_TELEGRAM_MAX_CHARS = 4096
+
+
+def _truncate(text: str, limit: int = _TELEGRAM_MAX_CHARS) -> str:
+    """Truncate *text* to *limit* chars, appending an ellipsis if needed."""
+    if len(text) <= limit:
+        return text
+    return text[: limit - 3] + "..."
 
 
 class TelegramBot:
@@ -148,7 +157,7 @@ class TelegramBot:
         except Exception:  # pragma: no cover - best-effort
             pass
         answer = await self._answer(question)
-        sent = await msg.reply_text(answer)
+        sent = await msg.reply_text(_truncate(answer))
         await self._record_pair(update, question, answer, sent.message_id)
 
     async def _cmd_approve(

@@ -221,8 +221,12 @@ class DiscordBot:
             if not pair:
                 return
             # Only auto-promote when an admin reacts.
-            guild = bot.get_guild(payload.guild_id) if payload.guild_id else None
-            member = guild.get_member(payload.user_id) if guild else None
+            # Prefer payload.member (populated directly by the gateway event)
+            # over a cache lookup, which may return None for uncached members.
+            member = payload.member
+            if member is None:
+                guild = bot.get_guild(payload.guild_id) if payload.guild_id else None
+                member = guild.get_member(payload.user_id) if guild else None
             if not self._is_admin(member):
                 return
             try:

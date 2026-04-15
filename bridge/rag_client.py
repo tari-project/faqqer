@@ -120,16 +120,18 @@ class AnythingLLMClient:
 
         url = f"{self._base_url}/api/v1/workspace/{self._workspace}/chat"
 
-        async for attempt in AsyncRetrying(
-            stop=stop_after_attempt(3),
-            wait=wait_exponential(min=1, max=8),
-            retry=retry_if_exception_type((httpx.HTTPError,)),
-            reraise=True,
-        ):
-            with attempt:
-                async with httpx.AsyncClient(
-                    timeout=self._timeout, headers=self._headers
-                ) as client:
+        # Create the HTTP client once so the connection pool is reused across
+        # retry attempts rather than torn down and rebuilt on every attempt.
+        async with httpx.AsyncClient(
+            timeout=self._timeout, headers=self._headers
+        ) as client:
+            async for attempt in AsyncRetrying(
+                stop=stop_after_attempt(3),
+                wait=wait_exponential(min=1, max=8),
+                retry=retry_if_exception_type((httpx.HTTPError,)),
+                reraise=True,
+            ):
+                with attempt:
                     resp = await client.post(url, json=payload)
                     if resp.status_code >= 500:
                         raise httpx.HTTPError(f"upstream {resp.status_code}")
