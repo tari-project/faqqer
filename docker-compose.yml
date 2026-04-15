@@ -1,0 +1,80 @@
+# docker-compose.yml — Tari AI Help Bot stack
+#
+# Services:
+#   anythingllm  — RAG / knowledge-base engine (admin UI on port 3001)
+#   bridge       — Multi-channel bot (Telegram + Discord) + scheduled jobs
+#
+# Quick start:
+#   cp .env.example .env   # then fill in real values
+#   docker compose up -d
+
+version: "3.9"
+
+networks:
+  # Private network so the bridge can reach AnythingLLM by hostname
+  # without exposing the admin API to the host.
+  tari-internal:
+    driver: bridge
+
+volumes:
+  # Persists AnythingLLM's model cache, vector store and config across restarts.
+  anythingllm-storage:
+  # Persists the bridge's APScheduler SQLite jobstore and feedback store.
+  bridge-data:
+
+services:
+
+  # ---------------------------------------------------------------------------
+  # AnythingLLM — RAG engine + vector store + admin UI
+  # ---------------------------------------------------------------------------
+  anythingllm:
+    image: mintplexlabs/anythingllm:latest
+    container_name: anythingllm
+    restart: unless-stopped
+    networks:
+      - tari-internal
+    # Expose admin UI to the host so an admin can configure the workspace,
+    # upload documents and generate an API key on first boot.
+    # Change to "127.0.0.1:3001:3001" to restrict access to localhost only.
+    ports:
+      - "3001:3001"
+    volumes:
+      - anythingllm-storage:/app/server/storage
+    environment:
+      # LLM provider.  Override these to use any provider AnythingLLM supports:
+      # openai | anthropic | azure | ollama | localai | etc.
+      LLM_PROVIDER: ${LLM_PROVIDER:-openai}
+      OPEN_AI_KEY: ${OPENAI_API_KEY:-}
+      OPEN_MODEL_PREF: ${OPENAI_MODEL:-gpt-4o-mini}
+      # Vector store (built-in LanceDB requires no extra service).
+      VECTOR_DB: ${VECTOR_DB:-lancedb}
+      # Disable anonymous telemetry.
+      DISABLE_TELEMETRY: "true"
+
+  # ---------------------------------------------------------------------------
+  # Bridge — Telegram + Discord bots and scheduled stats/analysis jobs
+  # ---------------------------------------------------------------------------
+  bridge:
+    build:
+      context: .
+      dockerfile: bridge/Dockerfile
+    container_name: tari-bridge
+    restart: unless-stopped
+    depends_on:
+      - anythingllm
+    networks:
+      - tari-internal
+    volumes:
+      # Persistent storage for APScheduler jobstore, feedback cache and KB
+      # manifest so the container can be replaced without losing state.
+      - bridge-data:/app/data
+      # Mount the faqs directory so an admin can drop files in and trigger
+      # a re-ingest without rebuilding the image.
+      - ./faqs:/app/faqs:ro
+    env_file:
+      - .env
+    environment:
+      # Tell the bridge where AnythingLLM lives on the internal network.
+      ANYTHINGLLM_BASE_URL: http://anythingllm:3001
+      BRIDGE_DATA_DIR: /app/data
+      BRIDGE_FAQ_DIR: /app/faqs
