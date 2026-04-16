@@ -46,6 +46,8 @@ class BridgeDiscordClient(discord.Client):
             await interaction.followup.send(answer)
             msg = await interaction.original_response()
             self.pending_qa[msg.id] = (question, answer)
+            if len(self.pending_qa) > 1000:
+                self.pending_qa.pop(next(iter(self.pending_qa)))
 
     async def on_ready(self) -> None:
         logger.info("Discord bot ready user=%s", self.user)
