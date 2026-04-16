@@ -5,6 +5,9 @@ import os
 import discord
 from discord import app_commands
 
+from kb_queue import push_to_kb
+from llm_client import ask_anythingllm
+
 
 logger = logging.getLogger(__name__)
 
@@ -12,8 +15,11 @@ logger = logging.getLogger(__name__)
 class BridgeDiscordClient(discord.Client):
     def __init__(self) -> None:
         intents = discord.Intents.none()
+        intents.guilds = True
+        intents.reactions = True
         super().__init__(intents=intents)
         self.tree = app_commands.CommandTree(self)
+        self.pending_qa: dict[int, tuple[str, str]] = {}
 
         @self.tree.command(name="ask", description="Ask a question (echo only)")
         @app_commands.describe(question="Your question")
@@ -28,14 +34,137 @@ class BridgeDiscordClient(discord.Client):
                 user,
                 question,
             )
-            await interaction.response.send_message(f"[Discord Echo]: {question}")
+            await interaction.response.defer()
+            answer = await ask_anythingllm(question)
+            logger.info(
+                "Discord /ask answer returned guild_id=%s channel_id=%s user=%s answer=%r",
+                guild,
+                channel,
+                user,
+                answer,
+            )
+            await interaction.followup.send(answer)
+            msg = await interaction.original_response()
+            self.pending_qa[msg.id] = (question, answer)
 
     async def on_ready(self) -> None:
         logger.info("Discord bot ready user=%s", self.user)
 
+    async def on_raw_reaction_add(self, payload: discord.RawReactionActionEvent) -> None:
+        try:
+            emoji = str(payload.emoji)
+
+            if emoji == "👍":
+                logger.info(
+                    "Discord 👍 reaction analytics guild_id=%s channel_id=%s user_id=%s message_id=%s",
+                    payload.guild_id,
+                    payload.channel_id,
+                    payload.user_id,
+                    payload.message_id,
+                )
+                return
+
+            if emoji != "💾":
+                return
+
+            admin_role_id_raw = os.getenv("DISCORD_ADMIN_ROLE_ID", "").strip()
+            if not admin_role_id_raw:
+                logger.info(
+                    "Discord 💾 reaction ignored (DISCORD_ADMIN_ROLE_ID unset) guild_id=%s channel_id=%s user_id=%s",
+                    payload.guild_id,
+                    payload.channel_id,
+                    payload.user_id,
+                )
+                return
+
+            try:
+                admin_role_id = int(admin_role_id_raw)
+            except ValueError:
+                logger.warning("Invalid DISCORD_ADMIN_ROLE_ID=%r", admin_role_id_raw)
+                return
+
+            member = payload.member
+            if member is None and payload.guild_id is not None:
+                guild = self.get_guild(payload.guild_id)
+                if guild is None:
+                    try:
+                        guild = await self.fetch_guild(payload.guild_id)
+                    except Exception as e:
+                        logger.error("Discord failed to fetch guild %s: %s", payload.guild_id, e)
+                        return
+
+                try:
+                    member = guild.get_member(payload.user_id)
+                    if member is None:
+                        member = await guild.fetch_member(payload.user_id)
+                except Exception as e:
+                    logger.error(
+                        "Discord failed to fetch member %s in guild %s: %s",
+                        payload.user_id,
+                        payload.guild_id,
+                        e,
+                    )
+                    return
+
+            if member is None:
+                logger.warning(
+                    "Discord 💾 reaction ignored (member unavailable) guild_id=%s channel_id=%s user_id=%s",
+                    payload.guild_id,
+                    payload.channel_id,
+                    payload.user_id,
+                )
+                return
+
+            is_admin = any(role.id == admin_role_id for role in getattr(member, "roles", []))
+            if not is_admin:
+                logger.info(
+                    "Discord 💾 reaction ignored (missing admin role) guild_id=%s channel_id=%s user_id=%s",
+                    payload.guild_id,
+                    payload.channel_id,
+                    payload.user_id,
+                )
+                return
+
+            qa = self.pending_qa.get(payload.message_id)
+            if not qa:
+                logger.warning(
+                    "Discord 💾 reaction received but no pending QA found message_id=%s",
+                    payload.message_id,
+                )
+                return
+
+            question, answer = qa
+            ok = await push_to_kb(question, answer)
+            logger.info(
+                "Discord KB push attempted guild_id=%s channel_id=%s user_id=%s ok=%s",
+                payload.guild_id,
+                payload.channel_id,
+                payload.user_id,
+                ok,
+            )
+
+            try:
+                channel = self.get_channel(payload.channel_id)
+                if channel is None:
+                    channel = await self.fetch_channel(payload.channel_id)
+                await channel.send("Answer saved to knowledge base (pending review)")
+            except Exception as e:
+                logger.error("Discord failed to send KB confirmation message: %s", e)
+        except Exception as e:
+            logger.error("Discord reaction handler failed: %s", e)
+
     async def setup_hook(self) -> None:
-        await self.tree.sync()
-        logger.info("Discord command tree synced globally")
+        import os
+
+        guild_id = os.getenv("DISCORD_TEST_GUILD_ID")
+        if guild_id:
+            guild = discord.Object(id=int(guild_id))
+            self.tree.copy_global_to(guild=guild)
+            await self.tree.sync(guild=guild)
+            logger.info("Discord command tree synced to guild %s", guild_id)
+        else:
+            await self.tree.sync()
+            logger.info("Discord command tree synced globally")
 
 
 async def run_discord_bot(stop_event) -> None:
