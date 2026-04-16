@@ -141,7 +141,7 @@ async def post_hash_power(bot):
 
         # Create the hash power stats message
         hash_power_stats = (
-            f"ðŸ“Š Current Tari Network Stats ðŸ“Š\n"
+            f"📊 Current Tari Network Stats 📊\n"
             f"Block Height: {block_height:,}\n"
             f"RandomX (Tari): {formatted_rxt_hash_rate}\n"
             f"RandomX (Merged-Mined XMR): {formatted_rxm_hash_rate}\n"
@@ -159,4 +159,3 @@ async def post_hash_power(bot):
                 logger.error("Error posting hash power stats to chat ID %s: %s", chat_id, e)
     except Exception as e:
         logger.error("Error fetching hash power stats: %s", e)
-
