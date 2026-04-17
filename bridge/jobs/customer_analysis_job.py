@@ -8,6 +8,7 @@ import asyncio
 import json
 import logging
 import os
+import shutil
 import traceback
 from datetime import datetime, timezone
 
@@ -506,6 +507,11 @@ Bot accounts cannot access historical messages from channels.
             await send_message_to_group(telegram_bot, formatted_message, target_group_id)
 
         logger.info("Customer service analysis completed and posted")
+        try:
+            shutil.rmtree("temp_analysis", ignore_errors=True)
+            logger.info("Cleaned up temp_analysis directory")
+        except Exception as e:
+            logger.warning("Could not clean temp_analysis: %s", e)
 
     except Exception as e:
         logger.error("Error in customer service analysis: %s", e)

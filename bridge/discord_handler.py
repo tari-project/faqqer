@@ -157,8 +157,6 @@ class BridgeDiscordClient(discord.Client):
             logger.error("Discord reaction handler failed: %s", e)
 
     async def setup_hook(self) -> None:
-        import os
-
         guild_id = os.getenv("DISCORD_TEST_GUILD_ID")
         if guild_id and guild_id.strip().isdigit():
             guild = discord.Object(id=int(guild_id.strip()))

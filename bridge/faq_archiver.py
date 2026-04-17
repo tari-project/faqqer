@@ -3,7 +3,7 @@ from telethon import TelegramClient
 import os
 import logging
 import html
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from dotenv import load_dotenv
 import sys
 
@@ -47,7 +47,7 @@ async def get_messages_from_channel(channel_username, hours_history, media_folde
     Fetches all messages from the given channel within the specified time period.
     Returns messages sorted in chronological order (oldest first).
     """
-    now_utc_naive = datetime.utcnow()  # naive UTC
+    now_utc_naive = datetime.now(timezone.utc).replace(tzinfo=None)  # naive UTC
     cutoff_time_naive = now_utc_naive - timedelta(hours=hours_history)
 
     offset_id = 0
@@ -98,7 +98,7 @@ async def write_combined_text_history(all_messages, filepath, channels, hours_hi
         # Write header
         f.write(f"Combined Chat History for channels: {', '.join(channels)}\n")
         f.write(f"Time period: Last {hours_history} hours\n")
-        f.write(f"Generated on: {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')} UTC\n")
+        f.write(f"Generated on: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC\n")
         f.write('=' * 70 + '\n\n')
         
         # To store a mapping of message ID to its content (used for "reply to" info)
@@ -156,7 +156,7 @@ async def write_combined_html_history(all_messages, filepath, channels, hours_hi
         f.write(f"<h1>Combined Chat History</h1>")
         f.write(f"<p><strong>Channels:</strong> {', '.join(channels)}</p>")
         f.write(f"<p><strong>Time period:</strong> Last {hours_history} hours</p>")
-        f.write(f"<p><strong>Generated on:</strong> {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')} UTC</p>")
+        f.write(f"<p><strong>Generated on:</strong> {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC</p>")
         
         # To store a mapping of message ID to its content (used for "reply to" info)
         message_dict = {}
