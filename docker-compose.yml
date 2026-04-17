@@ -1,0 +1,37 @@
+version: "3.9"
+services:
+  anythingllm:
+    image: mintplexlabs/anythingllm:latest
+    container_name: anythingllm
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    volumes:
+      - anythingllm_storage:/app/server/storage
+    environment:
+      - LLM_PROVIDER=openai
+      - OPEN_AI_KEY=${OPENAI_API_KEY}
+      - EMBEDDING_ENGINE=openai
+      - VECTOR_DB=lancedb
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/api/ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  bridge:
+    build:
+      context: ./bridge
+      dockerfile: Dockerfile
+    container_name: faqqer-bridge
+    restart: unless-stopped
+    depends_on:
+      anythingllm:
+        condition: service_healthy
+    env_file:
+      - ./bridge/.env
+    environment:
+      - ANYTHINGLLM_BASE_URL=http://anythingllm:3001
+
+volumes:
+  anythingllm_storage:
