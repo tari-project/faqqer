@@ -160,11 +160,18 @@ class BridgeDiscordClient(discord.Client):
         import os
 
         guild_id = os.getenv("DISCORD_TEST_GUILD_ID")
-        if guild_id:
-            guild = discord.Object(id=int(guild_id))
+        if guild_id and guild_id.strip().isdigit():
+            guild = discord.Object(id=int(guild_id.strip()))
             self.tree.copy_global_to(guild=guild)
             await self.tree.sync(guild=guild)
             logger.info("Discord command tree synced to guild %s", guild_id)
+        elif guild_id:
+            logger.warning(
+                "DISCORD_TEST_GUILD_ID=%r is not a valid integer, skipping guild-specific sync",
+                guild_id,
+            )
+            await self.tree.sync()
+            logger.info("Discord command tree synced globally")
         else:
             await self.tree.sync()
             logger.info("Discord command tree synced globally")

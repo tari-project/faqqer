@@ -9,7 +9,7 @@ import json
 import logging
 import os
 import traceback
-from datetime import datetime
+from datetime import datetime, timezone
 
 from openai import AsyncOpenAI, OpenAIError
 
@@ -341,7 +341,7 @@ def format_telegram_table(analysis_data, analysis_hours, custom_question=None):
                 )
 
             return f"""
-🔍 **{title} - {datetime.now().strftime('%Y-%m-%d %H:%M UTC')}**
+🔍 **{title} - {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}**
 
 📊 **Summary:** {data.get('analysis_summary', 'No significant customer service issues found in the analyzed period.')}
 
@@ -359,7 +359,7 @@ def format_telegram_table(analysis_data, analysis_hours, custom_question=None):
             issues_header = f"**Issues Related to '{custom_question}':**"
 
         message = f"""
-🔍 **{title} - {datetime.now().strftime('%Y-%m-%d %H:%M UTC')}**{focus_line}
+🔍 **{title} - {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}**{focus_line}
 
 📊 **Summary:** {data.get('analysis_summary', 'Analysis completed')}
 
@@ -388,7 +388,7 @@ def format_telegram_table(analysis_data, analysis_hours, custom_question=None):
         logger.error("Error parsing analysis JSON: %s", e)
         logger.error("Raw analysis data (first 1000 chars): %s", analysis_data[:1000])
         return f"""
-🔍 **Customer Service Analysis - {datetime.now().strftime('%Y-%m-%d %H:%M UTC')}**
+🔍 **Customer Service Analysis - {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}**
 
 ❌ Error processing analysis results. Raw response was received but could not be parsed.
 
@@ -397,7 +397,7 @@ def format_telegram_table(analysis_data, analysis_hours, custom_question=None):
     except Exception as e:
         logger.error("Error formatting analysis results: %s", e)
         return f"""
-🔍 **Customer Service Analysis - {datetime.now().strftime('%Y-%m-%d %H:%M UTC')}**
+🔍 **Customer Service Analysis - {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}**
 
 ❌ Error formatting analysis results: {str(e)}
 """
@@ -421,7 +421,7 @@ async def run_customer_service_analysis(telegram_bot, target_group_id=None, hour
         if not phone_number:
             logger.warning("TELEGRAM_PHONE_NUMBER not configured - customer analysis requires user account access")
             no_auth_msg = f"""
-🔍 **Customer Service Analysis - {datetime.now().strftime('%Y-%m-%d %H:%M UTC')}**
+🔍 **Customer Service Analysis - {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}**
 
 ⚠️ **Analysis Unavailable**
 Customer service analysis requires a Telegram user account to read channel history.
@@ -451,7 +451,7 @@ Bot accounts cannot access historical messages from channels.
         if stats["total_messages"] == 0:
             logger.info("No messages found for analysis")
             no_messages_msg = f"""
-🔍 **Customer Service Analysis - {datetime.now().strftime('%Y-%m-%d %H:%M UTC')}**
+🔍 **Customer Service Analysis - {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}**
 
 📊 No messages found in the last {analysis_hours} hours to analyze.
 """
@@ -480,7 +480,7 @@ Bot accounts cannot access historical messages from channels.
         if not analysis_result:
             logger.error("Failed to get analysis from OpenAI")
             error_msg = f"""
-🔍 **Customer Service Analysis - {datetime.now().strftime('%Y-%m-%d %H:%M UTC')}**
+🔍 **Customer Service Analysis - {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}**
 
 ❌ Analysis failed due to AI service error. Please try again later.
 """
@@ -514,7 +514,7 @@ Bot accounts cannot access historical messages from channels.
         # Send error notification
         try:
             error_msg = f"""
-🔍 **Customer Service Analysis - {datetime.now().strftime('%Y-%m-%d %H:%M UTC')}**
+🔍 **Customer Service Analysis - {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}**
 
 ❌ Analysis failed with error: {str(e)}
 """

@@ -81,6 +81,11 @@ Three scheduled jobs (all configurable via env vars):
   analyzes support issues via OpenAI, posts summary
   (default: every 3 hours, requires TELEGRAM_PHONE_NUMBER)
 
+Note: Customer analysis requires a pre-authenticated 
+Telethon session file. Generate it once by running 
+python faq_archiver.py locally, then add the 
+.session file path to TELEGRAM_SESSION_FILE in .env.
+
 ## Knowledge Base Updates
 Two ways to update without code changes or redeployment:
 1. Edit or add files in faqs/ directory, then run:

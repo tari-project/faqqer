@@ -9,6 +9,8 @@ import sys
 # Load environment variables from the .env file
 load_dotenv()
 
+logger = logging.getLogger(__name__)
+
 # Replace these with your actual API details
 bot_token = os.getenv('TELEGRAM_BOT_TOKEN')
 api_id = os.getenv('TELEGRAM_API_ID')     # From Telegram Developer Portal
@@ -36,7 +38,8 @@ def ensure_directories_exist(output_dir, media_folder):
         os.makedirs(media_folder)
 
 # Initialize the Telegram client for user login
-client = TelegramClient('session_name', api_id, api_hash)
+_session_file = os.getenv("TELEGRAM_SESSION_FILE", "faq_archiver")
+client = TelegramClient(_session_file, api_id, api_hash)
 
 async def get_messages_from_channel(channel_username, hours_history, media_folder):
     """
@@ -258,7 +261,18 @@ async def archive_channels(channels=None, hours_history=None, output_dir=None,
     logging.info(f"Fetching last {hours_history} hours of messages")
     
     # Start the Telegram client
-    await client.start(phone=phone_number)
+    session_file = os.getenv("TELEGRAM_SESSION_FILE", "faq_archiver")
+    if os.path.exists(f"{session_file}.session"):
+        await client.start(phone=phone_number)
+    else:
+        logger.error(
+            "No Telethon session file found. "
+            "Customer analysis requires a pre-generated "
+            "session. Run faq_archiver.py interactively "
+            "once to create the session, then mount "
+            "the .session file into the container."
+        )
+        return {"total_messages": 0, "channels_processed": []}
     
     # Collect all messages from all channels
     all_messages = []
@@ -297,4 +311,3 @@ async def archive_channels(channels=None, hours_history=None, output_dir=None,
         "channel_stats": channel_stats,
         "channels_processed": list(channel_stats.keys())
     }
-
