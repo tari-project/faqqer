@@ -2,6 +2,7 @@ import asyncio
 from telethon import TelegramClient
 import os
 import logging
+import html
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
 import sys
@@ -170,7 +171,7 @@ async def write_combined_html_history(all_messages, filepath, channels, hours_hi
             # Reply info
             if msg.reply_to_msg_id:
                 replied_message = message_dict.get(msg.reply_to_msg_id, "Unknown message")
-                reply_info = f'<div class="reply">Replying to: {replied_message}</div>'
+                reply_info = f'<div class="reply">Replying to: {html.escape(replied_message)}</div>'
             else:
                 reply_info = ""
 
@@ -214,7 +215,7 @@ async def write_combined_html_history(all_messages, filepath, channels, hours_hi
             f.write(f'<div class="user">{username}</div>')
             f.write(f'<div class="date">{date_str}</div>')
             if content:
-                f.write(f'<div class="content">{content}</div>')
+                f.write(f'<div class="content">{html.escape(content)}</div>')
             else:
                 f.write(f'<div class="content">Media message</div>')
             f.write(reply_info)
