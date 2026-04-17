@@ -20,8 +20,13 @@ logger = logging.getLogger(__name__)
 CUSTOMER_ANALYSIS_CRON_DEFAULT = "0 */3 * * *"
 
 # Analysis settings
-ANALYSIS_MODEL = "gpt-4o"
-ANALYSIS_TEMPERATURE = 0.3
+ANALYSIS_MODEL = os.getenv("ANALYSIS_MODEL", "gpt-4o").strip() or "gpt-4o"
+_analysis_temperature_raw = os.getenv("ANALYSIS_TEMPERATURE", "0.3").strip()
+try:
+    ANALYSIS_TEMPERATURE = float(_analysis_temperature_raw)
+except ValueError:
+    logger.warning("Invalid ANALYSIS_TEMPERATURE=%r; defaulting to 0.3", _analysis_temperature_raw)
+    ANALYSIS_TEMPERATURE = 0.3
 ANALYSIS_TIMEOUT = 120
 MAX_MESSAGE_LENGTH = 4000
 MAX_EXAMPLE_LENGTH = 200  # Increased from 80 to 200 for longer quotes

@@ -64,17 +64,31 @@ def format_cuckaroo_rate(hash_rate):
 
 # Function to get the latest block height and metadata
 async def get_latest_info():
-    url = "https://textexplore.tari.com/?json"
+    url = os.getenv("TARI_EXPLORER_URL", "https://textexplore.tari.com/?json").strip()
+    if not url:
+        url = "https://textexplore.tari.com/?json"
     async with httpx.AsyncClient(timeout=httpx.Timeout(30.0)) as client:
         response = await client.get(url)
         response.raise_for_status()
         data = response.json()
 
-    block_height = int(data["tipInfo"]["metadata"]["best_block_height"])
-    currentShaHashRate = int(str(data["currentSha3xHashRate"]).replace(",", ""))
-    currentMoneroHashRate = int(str(data["currentMoneroRandomxHashRate"]).replace(",", ""))
-    currentTariRXHashRate = int(str(data["currentTariRandomxHashRate"]).replace(",", ""))
-    currentCuckarooHashRate = float(data["currentCuckarooHashRate"])
+    def _to_int(value) -> int:
+        try:
+            return int(float(str(value).replace(",", "")))
+        except Exception:
+            return 0
+
+    def _to_float(value) -> float:
+        try:
+            return float(str(value).replace(",", ""))
+        except Exception:
+            return 0.0
+
+    block_height = _to_int(((data.get("tipInfo") or {}).get("metadata") or {}).get("best_block_height", 0))
+    currentShaHashRate = _to_int(data.get("currentSha3xHashRate", 0))
+    currentMoneroHashRate = _to_int(data.get("currentMoneroRandomxHashRate", 0))
+    currentTariRXHashRate = _to_int(data.get("currentTariRandomxHashRate", 0))
+    currentCuckarooHashRate = _to_float(data.get("currentCuckarooHashRate", 0))
     return block_height, currentShaHashRate, currentMoneroHashRate, currentTariRXHashRate, currentCuckarooHashRate
 
 
@@ -86,7 +100,7 @@ async def post_block_height(bot):
 
     try:
         # Fetch the block height stats
-        block_height, x, y, z, w = await get_latest_info()
+        block_height, *_ = await get_latest_info()
 
         # List of sample questions
         questions = [
@@ -103,7 +117,7 @@ async def post_block_height(bot):
 
         # Format the block height stats with the random question
         block_height_stats = (
-            f"Current Tari block height: ~{block_height:,}. Got a question? Type e.g. '/ask {random_question}' "
+            f"Current Tari block height: ~{block_height:,}. Got a question? Just type it here (e.g. '{random_question}') "
             "in any language to get answers to recent questions."
         )
         # Loop over the group IDs and send the message
