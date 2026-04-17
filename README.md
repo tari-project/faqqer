@@ -62,7 +62,6 @@ after the API key is added to .env.
 | `ANALYSIS_TEMPERATURE` | OpenAI temperature used for customer service analysis. | `0.3` |
 
 ## Self-Learning Loop
-Explain the admin-gated 💾 reaction workflow:
 - User asks a question, bot answers from knowledge base
 - Admin reacts with 💾 to the bot's answer message
 - Q&A pair is pushed to AnythingLLM as a pending document
@@ -90,8 +89,6 @@ Two ways to update without code changes or redeployment:
    to upload documents, URLs, or paste text directly
 
 ## Acceptance Criteria Coverage
-Add a section explicitly mapping each bounty acceptance
-criterion to how this PR satisfies it:
 - Framework selected: AnythingLLM (see Framework Choice)
 - Telegram answers grounded in KB: llm_client.py queries
   AnythingLLM workspace via REST API
