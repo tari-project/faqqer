@@ -117,7 +117,7 @@ async def post_block_height(bot):
 
         # Format the block height stats with the random question
         block_height_stats = (
-            f"Current Tari block height: ~{block_height:,}. Got a question? Just type it here (e.g. '{random_question}') "
+            f"Current Tari block height: ~{block_height:,}. Got a question? Mention @faqqer (e.g. '@faqqer {random_question}') "
             "in any language to get answers to recent questions."
         )
         # Loop over the group IDs and send the message

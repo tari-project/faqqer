@@ -42,9 +42,14 @@ def build_telegram_app() -> Application:
     pending_qa: dict[tuple[int, int], tuple[str, str]] = {}
     admin_ids = _load_telegram_admin_ids()
     logger.info("Telegram admin IDs loaded: %d", len(admin_ids))
+    bot_username_cache: str | None = None
 
-    async def answer_question(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-        text = update.effective_message.text if update.effective_message else None
+    async def _handle_question(
+        update: Update,
+        context: ContextTypes.DEFAULT_TYPE,
+        text_override: str | None = None,
+    ) -> None:
+        text = text_override if text_override is not None else (update.effective_message.text if update.effective_message else None)
         chat_id = update.effective_chat.id if update.effective_chat else None
         user = update.effective_user.username if update.effective_user else None
         logger.info("Telegram question received chat_id=%s user=%s text=%r", chat_id, user, text)
@@ -59,6 +64,47 @@ def build_telegram_app() -> Application:
             pending_qa[(chat_id, sent_msg.message_id)] = (text, answer)
             if len(pending_qa) > _MAX_PENDING_QA:
                 pending_qa.pop(next(iter(pending_qa)))
+
+    async def answer_question_private(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+        await _handle_question(update, context)
+
+    async def answer_question_group(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+        nonlocal bot_username_cache
+        text = update.effective_message.text if update.effective_message else None
+        if not text:
+            return
+
+        bot_username = bot_username_cache or getattr(context.bot, "username", None)
+        if not bot_username:
+            try:
+                me = await context.bot.get_me()
+                bot_username = me.username
+            except Exception:
+                bot_username = None
+        if bot_username:
+            bot_username_cache = bot_username
+
+        lowered = text.lower()
+        mentioned = False
+        if bot_username:
+            mentioned = f"@{bot_username.lower()}" in lowered
+
+        replied_to_bot = False
+        reply = update.effective_message.reply_to_message if update.effective_message else None
+        if reply and reply.from_user and bot_username:
+            replied_to_bot = (reply.from_user.username or "").lower() == bot_username.lower()
+
+        if not (mentioned or replied_to_bot):
+            return
+
+        cleaned = text
+        if mentioned and bot_username:
+            cleaned = cleaned.replace(f"@{bot_username}", "").replace(f"@{bot_username.lower()}", "")
+            cleaned = cleaned.strip()
+
+        if not cleaned:
+            return
+        await _handle_question(update, context, text_override=cleaned)
 
     async def on_reaction(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         reaction_update = update.message_reaction
@@ -124,7 +170,8 @@ def build_telegram_app() -> Application:
             logger.error("Telegram failed to send KB confirmation message: %s", e)
 
     app = ApplicationBuilder().token(token).build()
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, answer_question))
+    app.add_handler(MessageHandler(filters.ChatType.PRIVATE & filters.TEXT & ~filters.COMMAND, answer_question_private))
+    app.add_handler(MessageHandler(filters.ChatType.GROUPS & filters.TEXT & ~filters.COMMAND, answer_question_group))
     app.add_handler(MessageReactionHandler(on_reaction))
     return app
 

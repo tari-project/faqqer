@@ -47,8 +47,12 @@ async def get_messages_from_channel(channel_username, hours_history, media_folde
     Fetches all messages from the given channel within the specified time period.
     Returns messages sorted in chronological order (oldest first).
     """
-    now_utc_naive = datetime.now(timezone.utc).replace(tzinfo=None)  # naive UTC
-    cutoff_time_naive = now_utc_naive - timedelta(hours=hours_history)
+    cutoff_time = datetime.now(timezone.utc) - timedelta(hours=hours_history)
+
+    def _ensure_utc(dt: datetime) -> datetime:
+        if dt.tzinfo is None:
+            return dt.replace(tzinfo=timezone.utc)
+        return dt.astimezone(timezone.utc)
 
     offset_id = 0
     limit = 100
@@ -69,18 +73,18 @@ async def get_messages_from_channel(channel_username, hours_history, media_folde
             break
 
         # The oldest message in this batch
-        batch_oldest_date = messages[-1].date.replace(tzinfo=None)
+        batch_oldest_date = _ensure_utc(messages[-1].date)
 
         # Keep only messages within the specified time period
         for msg in messages:
-            msg_date_naive = msg.date.replace(tzinfo=None)
-            if msg_date_naive >= cutoff_time_naive:
+            msg_date = _ensure_utc(msg.date)
+            if msg_date >= cutoff_time:
                 # Add channel info to message for combined output
                 msg.channel_name = channel_username
                 all_messages.append(msg)
 
         # If the oldest message in the batch is older than our cutoff, stop
-        if batch_oldest_date < cutoff_time_naive:
+        if batch_oldest_date < cutoff_time:
             break
 
         # Prepare to fetch older messages next time

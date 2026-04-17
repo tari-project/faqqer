@@ -517,7 +517,7 @@ Bot accounts cannot access historical messages from channels.
 
         logger.info("Customer service analysis completed and posted")
         try:
-            shutil.rmtree("temp_analysis", ignore_errors=True)
+            await asyncio.to_thread(shutil.rmtree, "temp_analysis", ignore_errors=True)
             logger.info("Cleaned up temp_analysis directory")
         except Exception as e:
             logger.warning("Could not clean temp_analysis: %s", e)
