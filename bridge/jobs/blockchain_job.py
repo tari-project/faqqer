@@ -67,7 +67,24 @@ async def get_latest_info() -> tuple[int, int, int, int, float]:
     url = os.getenv("TARI_EXPLORER_URL", "https://textexplore.tari.com/?json").strip()
     if not url:
         url = "https://textexplore.tari.com/?json"
-    async with httpx.AsyncClient(timeout=httpx.Timeout(30.0)) as client:
+logger = logging.getLogger(__name__)
+
+# Initialize a persistent client
+_client = httpx.AsyncClient(timeout=httpx.Timeout(30.0))
+
+BLOCK_HEIGHT_CRON_DEFAULT = "0 */4 * * *"
+
+# ... (rest of the file)
+
+# Function to get the latest block height and metadata
+async def get_latest_info() -> tuple[int, int, int, int, float]:
+    url = os.getenv("TARI_EXPLORER_URL", "https://textexplore.tari.com/?json").strip()
+    if not url:
+        url = "https://textexplore.tari.com/?json"
+    
+    response = await _client.get(url)
+    response.raise_for_status()
+    data = response.json()
         response = await client.get(url)
         response.raise_for_status()
         data = response.json()
