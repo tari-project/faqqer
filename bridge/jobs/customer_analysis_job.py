@@ -336,11 +336,11 @@ def format_telegram_table(analysis_data, analysis_hours, custom_question=None):
                 )
 
             return f"""
-ðŸ” **{title} - {datetime.now().strftime('%Y-%m-%d %H:%M UTC')}**
+🔍 **{title} - {datetime.now().strftime('%Y-%m-%d %H:%M UTC')}**
 
-ðŸ“Š **Summary:** {data.get('analysis_summary', 'No significant customer service issues found in the analyzed period.')}
+📊 **Summary:** {data.get('analysis_summary', 'No significant customer service issues found in the analyzed period.')}
 
-âœ… {no_issues_message}
+✅ {no_issues_message}
 """
 
         # Build the clean formatted message
@@ -350,15 +350,15 @@ def format_telegram_table(analysis_data, analysis_hours, custom_question=None):
 
         if custom_question:
             title = f"Custom Analysis: {custom_question}"
-            focus_line = f"\nðŸŽ¯ **Exclusive Focus:** Only showing issues related to '{custom_question}'"
+            focus_line = f"\n🎯 **Exclusive Focus:** Only showing issues related to '{custom_question}'"
             issues_header = f"**Issues Related to '{custom_question}':**"
 
         message = f"""
-ðŸ” **{title} - {datetime.now().strftime('%Y-%m-%d %H:%M UTC')}**{focus_line}
+🔍 **{title} - {datetime.now().strftime('%Y-%m-%d %H:%M UTC')}**{focus_line}
 
-ðŸ“Š **Summary:** {data.get('analysis_summary', 'Analysis completed')}
+📊 **Summary:** {data.get('analysis_summary', 'Analysis completed')}
 
-ðŸ“ˆ **Total Issues Found:** {data.get('total_issues_found', len(data['categories']))}
+📈 **Total Issues Found:** {data.get('total_issues_found', len(data['categories']))}
 
 {issues_header}
 """
@@ -372,10 +372,10 @@ def format_telegram_table(analysis_data, analysis_hours, custom_question=None):
             if len(example) > MAX_EXAMPLE_LENGTH:
                 example = example[: MAX_EXAMPLE_LENGTH - 3] + "..."
 
-            message += f'\n{i}. **{cat_name}** ({count} people)\n   â”” _"{example}"_\n'
+            message += f'\n{i}. **{cat_name}** ({count} people)\n   └ _"{example}"_\n'
 
-        message += f"\nðŸ“… **Analysis Period:** Last {analysis_hours} hours"
-        message += f"\nðŸ”— **Channels:** {', '.join(channels)}"
+        message += f"\n📅 **Analysis Period:** Last {analysis_hours} hours"
+        message += f"\n🔗 **Channels:** {', '.join(channels)}"
 
         return message
 
@@ -383,18 +383,18 @@ def format_telegram_table(analysis_data, analysis_hours, custom_question=None):
         logger.error("Error parsing analysis JSON: %s", e)
         logger.error("Raw analysis data (first 1000 chars): %s", analysis_data[:1000])
         return f"""
-ðŸ” **Customer Service Analysis - {datetime.now().strftime('%Y-%m-%d %H:%M UTC')}**
+🔍 **Customer Service Analysis - {datetime.now().strftime('%Y-%m-%d %H:%M UTC')}**
 
-âŒ Error processing analysis results. Raw response was received but could not be parsed.
+❌ Error processing analysis results. Raw response was received but could not be parsed.
 
 **Debug Info:** JSON decode error at position {e.pos if hasattr(e, 'pos') else 'unknown'}
 """
     except Exception as e:
         logger.error("Error formatting analysis results: %s", e)
         return f"""
-ðŸ” **Customer Service Analysis - {datetime.now().strftime('%Y-%m-%d %H:%M UTC')}**
+🔍 **Customer Service Analysis - {datetime.now().strftime('%Y-%m-%d %H:%M UTC')}**
 
-âŒ Error formatting analysis results: {str(e)}
+❌ Error formatting analysis results: {str(e)}
 """
 
 
@@ -416,19 +416,19 @@ async def run_customer_service_analysis(telegram_bot, target_group_id=None, hour
         if not phone_number:
             logger.warning("TELEGRAM_PHONE_NUMBER not configured - customer analysis requires user account access")
             no_auth_msg = f"""
-ðŸ” **Customer Service Analysis - {datetime.now().strftime('%Y-%m-%d %H:%M UTC')}**
+🔍 **Customer Service Analysis - {datetime.now().strftime('%Y-%m-%d %H:%M UTC')}**
 
-âš ï¸ **Analysis Unavailable**
+⚠️ **Analysis Unavailable**
 Customer service analysis requires a Telegram user account to read channel history.
 Bot accounts cannot access historical messages from channels.
 
 **To enable this feature:**
-â€¢ Configure TELEGRAM_PHONE_NUMBER environment variable
-â€¢ Ensure the user account has access to the analyzed channels
+• Configure TELEGRAM_PHONE_NUMBER environment variable
+• Ensure the user account has access to the analyzed channels
 
 **Current Configuration:**
-â€¢ Analysis would cover: {', '.join(channels)}
-â€¢ Time period: Last {analysis_hours} hours
+• Analysis would cover: {', '.join(channels)}
+• Time period: Last {analysis_hours} hours
 """
             await send_message_to_group(telegram_bot, no_auth_msg, target_group_id)
             return
@@ -446,9 +446,9 @@ Bot accounts cannot access historical messages from channels.
         if stats["total_messages"] == 0:
             logger.info("No messages found for analysis")
             no_messages_msg = f"""
-ðŸ” **Customer Service Analysis - {datetime.now().strftime('%Y-%m-%d %H:%M UTC')}**
+🔍 **Customer Service Analysis - {datetime.now().strftime('%Y-%m-%d %H:%M UTC')}**
 
-ðŸ“Š No messages found in the last {analysis_hours} hours to analyze.
+📊 No messages found in the last {analysis_hours} hours to analyze.
 """
             await send_message_to_group(telegram_bot, no_messages_msg, target_group_id)
             return
@@ -472,9 +472,9 @@ Bot accounts cannot access historical messages from channels.
         if not analysis_result:
             logger.error("Failed to get analysis from OpenAI")
             error_msg = f"""
-ðŸ” **Customer Service Analysis - {datetime.now().strftime('%Y-%m-%d %H:%M UTC')}**
+🔍 **Customer Service Analysis - {datetime.now().strftime('%Y-%m-%d %H:%M UTC')}**
 
-âŒ Analysis failed due to AI service error. Please try again later.
+❌ Analysis failed due to AI service error. Please try again later.
 """
             await send_message_to_group(telegram_bot, error_msg, target_group_id)
             return
@@ -506,9 +506,9 @@ Bot accounts cannot access historical messages from channels.
         # Send error notification
         try:
             error_msg = f"""
-ðŸ” **Customer Service Analysis - {datetime.now().strftime('%Y-%m-%d %H:%M UTC')}**
+🔍 **Customer Service Analysis - {datetime.now().strftime('%Y-%m-%d %H:%M UTC')}**
 
-âŒ Analysis failed with error: {str(e)}
+❌ Analysis failed with error: {str(e)}
 """
             await send_message_to_group(telegram_bot, error_msg, target_group_id)
         except Exception:
@@ -518,4 +518,3 @@ Bot accounts cannot access historical messages from channels.
 async def manual_analysis_trigger(telegram_bot, target_group_id=None, hours=None, custom_question=None):
     """Manually trigger analysis for bot commands"""
     await run_customer_service_analysis(telegram_bot, target_group_id, hours, custom_question)
-

@@ -43,8 +43,7 @@ class BridgeDiscordClient(discord.Client):
                 user,
                 answer,
             )
-            await interaction.followup.send(answer)
-            msg = await interaction.original_response()
+            msg = await interaction.followup.send(answer, wait=True)
             self.pending_qa[msg.id] = (question, answer)
             if len(self.pending_qa) > 1000:
                 self.pending_qa.pop(next(iter(self.pending_qa)))

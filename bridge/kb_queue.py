@@ -27,6 +27,9 @@ async def push_to_kb(question: str, answer: str) -> bool:
         async with httpx.AsyncClient(timeout=httpx.Timeout(30.0)) as client:
             resp = await client.post(url, headers=headers, json=payload)
             resp.raise_for_status()
+            logger.info(
+                "KB document uploaded as pending - review in AnythingLLM admin UI before embedding"
+            )
 
         logger.info("KB push succeeded title=%r", title)
         return True
