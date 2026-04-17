@@ -136,6 +136,8 @@ class BridgeDiscordClient(discord.Client):
 
             question, answer = qa
             ok = await push_to_kb(question, answer)
+            if ok:
+                self.pending_qa.pop(payload.message_id, None)
             logger.info(
                 "Discord KB push attempted guild_id=%s channel_id=%s user_id=%s ok=%s",
                 payload.guild_id,

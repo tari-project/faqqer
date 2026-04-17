@@ -105,6 +105,8 @@ def build_telegram_app() -> Application:
 
         question, answer = pending_qa[(chat_id, message_id)]
         ok = await push_to_kb(question, answer)
+        if ok:
+            pending_qa.pop((chat_id, message_id), None)
         logger.info(
             "Telegram KB push attempted chat_id=%s user_id=%s ok=%s",
             chat_id,
