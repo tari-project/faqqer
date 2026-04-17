@@ -466,8 +466,11 @@ Bot accounts cannot access historical messages from channels.
 
         # Read the archived messages for analysis
         try:
-            with open("temp_analysis/combined_channel_history.txt", "r", encoding="utf-8") as f:
-                chat_content = f.read()
+            def _read_chat_content() -> str:
+                with open("temp_analysis/combined_channel_history.txt", "r", encoding="utf-8") as f:
+                    return f.read()
+
+            chat_content = await asyncio.to_thread(_read_chat_content)
         except FileNotFoundError:
             logger.error("Analysis archive file not found")
             return

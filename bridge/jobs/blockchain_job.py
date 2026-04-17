@@ -63,7 +63,7 @@ def format_cuckaroo_rate(hash_rate):
 
 
 # Function to get the latest block height and metadata
-async def get_latest_info():
+async def get_latest_info() -> tuple[int, int, int, int, float]:
     url = os.getenv("TARI_EXPLORER_URL", "https://textexplore.tari.com/?json").strip()
     if not url:
         url = "https://textexplore.tari.com/?json"
