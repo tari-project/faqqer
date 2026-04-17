@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import os
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -21,8 +22,12 @@ async def main() -> int:
         load_dotenv()
         logger.warning("No bridge/.env found; relying on process environment")
 
-    repo_root = Path(__file__).resolve().parent.parent
-    faqs_dir = repo_root / "faqs"
+    faqs_dir = Path(
+        os.getenv(
+            "FAQS_DIR",
+            str(Path(__file__).resolve().parent.parent / "faqs"),
+        )
+    )
     if not faqs_dir.exists():
         logger.error("FAQs directory not found: %s", faqs_dir)
         return 1
@@ -56,4 +61,3 @@ async def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(asyncio.run(main()))
-

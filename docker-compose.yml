@@ -32,6 +32,11 @@ services:
       - ./bridge/.env
     environment:
       - ANYTHINGLLM_BASE_URL=http://anythingllm:3001
+      - FAQS_DIR=/faqs
+      - TELEGRAM_SESSION_FILE=/app/sessions/faq_archiver
+    volumes:
+      - ./faqs:/faqs
+      - ./sessions:/app/sessions
 
 volumes:
   anythingllm_storage:

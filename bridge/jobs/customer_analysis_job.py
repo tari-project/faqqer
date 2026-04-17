@@ -18,6 +18,15 @@ from faq_archiver import archive_channels
 
 logger = logging.getLogger(__name__)
 
+_openai_client: AsyncOpenAI | None = None
+
+
+def _get_openai_client() -> AsyncOpenAI:
+    global _openai_client
+    if _openai_client is None:
+        _openai_client = AsyncOpenAI()
+    return _openai_client
+
 CUSTOMER_ANALYSIS_CRON_DEFAULT = "0 */3 * * *"
 
 # Analysis settings
@@ -196,7 +205,7 @@ async def query_openai_analysis(chat_content, custom_question=None):
         # Truncate content if it's too large
         truncated_content = truncate_chat_content(chat_content)
 
-        client = AsyncOpenAI()
+        client = _get_openai_client()
 
         # Use custom question if provided, otherwise use default analysis prompt
         if custom_question:

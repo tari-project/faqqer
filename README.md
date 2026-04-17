@@ -19,6 +19,10 @@ after the API key is added to .env.
 2. Copy bridge/.env.example to bridge/.env
    Fill in: TELEGRAM_BOT_TOKEN, DISCORD_BOT_TOKEN,
    OPENAI_API_KEY
+   Note: Create a sessions/ directory first:
+   mkdir sessions
+   The Telethon session file persists here across
+   container restarts.
 3. Run: docker-compose up -d
    (starts AnythingLLM and bridge containers)
 4. Open http://localhost:3001 and complete the setup

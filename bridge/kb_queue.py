@@ -5,6 +5,15 @@ import httpx
 
 logger = logging.getLogger(__name__)
 
+_http_client: httpx.AsyncClient | None = None
+
+
+def _get_client() -> httpx.AsyncClient:
+    global _http_client
+    if _http_client is None or _http_client.is_closed:
+        _http_client = httpx.AsyncClient(timeout=httpx.Timeout(30.0))
+    return _http_client
+
 
 async def push_to_kb(question: str, answer: str) -> bool:
     try:
@@ -24,12 +33,12 @@ async def push_to_kb(question: str, answer: str) -> bool:
             "metadata": {"title": title},
         }
 
-        async with httpx.AsyncClient(timeout=httpx.Timeout(30.0)) as client:
-            resp = await client.post(url, headers=headers, json=payload)
-            resp.raise_for_status()
-            logger.info(
-                "KB document uploaded as pending - review in AnythingLLM admin UI before embedding"
-            )
+        client = _get_client()
+        resp = await client.post(url, headers=headers, json=payload)
+        resp.raise_for_status()
+        logger.info(
+            "KB document uploaded as pending - review in AnythingLLM admin UI before embedding"
+        )
 
         logger.info("KB push succeeded title=%r", title)
         return True

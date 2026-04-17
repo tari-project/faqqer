@@ -94,44 +94,49 @@ async def get_messages_from_channel(channel_username, hours_history, media_folde
 
 async def write_combined_text_history(all_messages, filepath, channels, hours_history):
     """Write combined messages from all channels to a text file"""
-    with open(filepath, 'w', encoding='utf-8') as f:
-        # Write header
-        f.write(f"Combined Chat History for channels: {', '.join(channels)}\n")
-        f.write(f"Time period: Last {hours_history} hours\n")
-        f.write(f"Generated on: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC\n")
-        f.write('=' * 70 + '\n\n')
-        
-        # To store a mapping of message ID to its content (used for "reply to" info)
-        message_dict = {}
-        
-        for msg in all_messages:
-            sender = await msg.get_sender()
-            username = sender.username if sender else "Unknown"
-            date_str = msg.date.strftime('%Y-%m-%d %H:%M:%S')
-            content = msg.text or "Media message"
-            channel_name = getattr(msg, 'channel_name', 'Unknown')
+    parts: list[str] = []
+    parts.append(f"Combined Chat History for channels: {', '.join(channels)}\n")
+    parts.append(f"Time period: Last {hours_history} hours\n")
+    parts.append(f"Generated on: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC\n")
+    parts.append("=" * 70 + "\n\n")
 
-            # Check if message is a reply to another
-            if msg.reply_to_msg_id:
-                replied_message = message_dict.get(msg.reply_to_msg_id, "Unknown message")
-                reply_info = f"(Replying to: {replied_message})"
-            else:
-                reply_info = ""
+    # To store a mapping of message ID to its content (used for "reply to" info)
+    message_dict = {}
 
-            # Add message content to dictionary for future replies
-            message_dict[msg.id] = content
+    for msg in all_messages:
+        sender = await msg.get_sender()
+        username = sender.username if sender else "Unknown"
+        date_str = msg.date.strftime("%Y-%m-%d %H:%M:%S")
+        content = msg.text or "Media message"
+        channel_name = getattr(msg, "channel_name", "Unknown")
 
-            f.write(f"Channel: {channel_name} | User: {username} | Date: {date_str}\n")
-            f.write(f"Message: {content} {reply_info}\n")
-            f.write('-' * 50 + '\n')  # Separator
+        # Check if message is a reply to another
+        if msg.reply_to_msg_id:
+            replied_message = message_dict.get(msg.reply_to_msg_id, "Unknown message")
+            reply_info = f"(Replying to: {replied_message})"
+        else:
+            reply_info = ""
 
+        # Add message content to dictionary for future replies
+        message_dict[msg.id] = content
+
+        parts.append(f"Channel: {channel_name} | User: {username} | Date: {date_str}\n")
+        parts.append(f"Message: {content} {reply_info}\n")
+        parts.append("-" * 50 + "\n")
+
+    text_out = "".join(parts)
+
+    def _write_text() -> None:
+        with open(filepath, "w", encoding="utf-8") as f:
+            f.write(text_out)
+
+    await asyncio.to_thread(_write_text)
     logging.info(f"Combined text chat history saved to {os.path.abspath(filepath)}")
 
 async def write_combined_html_history(all_messages, filepath, channels, hours_history, media_folder):
     """Write combined messages from all channels to an HTML file"""
-    with open(filepath, 'w', encoding='utf-8') as f:
-        # HTML header and CSS
-        f.write("""
+    parts: list[str] = []
+    parts.append("""
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -152,78 +157,86 @@ async def write_combined_html_history(all_messages, filepath, channels, hours_hi
 <body>
 """)
 
-        # Write header info
-        f.write(f"<h1>Combined Chat History</h1>")
-        f.write(f"<p><strong>Channels:</strong> {', '.join(channels)}</p>")
-        f.write(f"<p><strong>Time period:</strong> Last {hours_history} hours</p>")
-        f.write(f"<p><strong>Generated on:</strong> {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC</p>")
-        
-        # To store a mapping of message ID to its content (used for "reply to" info)
-        message_dict = {}
+    parts.append("<h1>Combined Chat History</h1>")
+    parts.append(f"<p><strong>Channels:</strong> {', '.join(channels)}</p>")
+    parts.append(f"<p><strong>Time period:</strong> Last {hours_history} hours</p>")
+    parts.append(
+        f"<p><strong>Generated on:</strong> {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC</p>"
+    )
 
-        for msg in all_messages:
-            sender = await msg.get_sender()
-            username = sender.username if sender else "Unknown"
-            date_str = msg.date.strftime('%Y-%m-%d %H:%M:%S')
-            content = msg.text or ""
-            channel_name = getattr(msg, 'channel_name', 'Unknown')
+    # To store a mapping of message ID to its content (used for "reply to" info)
+    message_dict = {}
 
-            # Reply info
-            if msg.reply_to_msg_id:
-                replied_message = message_dict.get(msg.reply_to_msg_id, "Unknown message")
-                reply_info = f'<div class="reply">Replying to: {html.escape(replied_message)}</div>'
-            else:
-                reply_info = ""
+    for msg in all_messages:
+        sender = await msg.get_sender()
+        username = sender.username if sender else "Unknown"
+        date_str = msg.date.strftime("%Y-%m-%d %H:%M:%S")
+        content = msg.text or ""
+        channel_name = getattr(msg, "channel_name", "Unknown")
 
-            media_reference = ""
-            if msg.media:
-                try:
-                    media_path = await msg.download_media(file=media_folder)
-                    if media_path:
-                        media_filename = os.path.basename(media_path)
-                        if media_filename.lower().endswith(('.jpg', '.jpeg', '.png', '.gif')):
-                            media_reference = (
-                                f'<div class="media">'
-                                f'<img src="{media_folder}/{media_filename}" alt="Image" width="300">'
-                                '</div>'
-                            )
-                        elif media_filename.lower().endswith(('.mp4', '.webm', '.mkv')):
-                            media_reference = (
-                                f'<div class="media">'
-                                f'<video width="300" controls>'
-                                f'<source src="{media_folder}/{media_filename}" type="video/mp4">'
-                                'Your browser does not support the video tag.'
-                                '</video></div>'
-                            )
-                        else:
-                            media_reference = (
-                                f'<div class="media">'
-                                f'<a href="{media_folder}/{media_filename}" download>'
-                                f'Download {media_filename}</a></div>'
-                            )
+        # Reply info
+        if msg.reply_to_msg_id:
+            replied_message = message_dict.get(msg.reply_to_msg_id, "Unknown message")
+            reply_info = f'<div class="reply">Replying to: {html.escape(replied_message)}</div>'
+        else:
+            reply_info = ""
+
+        media_reference = ""
+        if msg.media:
+            try:
+                media_path = await msg.download_media(file=media_folder)
+                if media_path:
+                    media_filename = os.path.basename(media_path)
+                    if media_filename.lower().endswith((".jpg", ".jpeg", ".png", ".gif")):
+                        media_reference = (
+                            f'<div class="media">'
+                            f'<img src="{media_folder}/{media_filename}" alt="Image" width="300">'
+                            "</div>"
+                        )
+                    elif media_filename.lower().endswith((".mp4", ".webm", ".mkv")):
+                        media_reference = (
+                            f'<div class="media">'
+                            f'<video width="300" controls>'
+                            f'<source src="{media_folder}/{media_filename}" type="video/mp4">'
+                            "Your browser does not support the video tag."
+                            "</video></div>"
+                        )
                     else:
-                        logging.warning(f"Failed to download media for message {msg.id}")
-                except Exception as e:
-                    logging.error(f"Error downloading media for message {msg.id}: {e}")
+                        media_reference = (
+                            f'<div class="media">'
+                            f'<a href="{media_folder}/{media_filename}" download>'
+                            f"Download {media_filename}</a></div>"
+                        )
+                else:
+                    logging.warning(f"Failed to download media for message {msg.id}")
+            except Exception as e:
+                logging.error(f"Error downloading media for message {msg.id}: {e}")
 
-            # Store for future replies
-            message_dict[msg.id] = content if content else "Media message"
+        # Store for future replies
+        message_dict[msg.id] = content if content else "Media message"
 
-            # HTML output
-            f.write('<div class="message">')
-            f.write(f'<div class="channel">#{channel_name}</div>')
-            f.write(f'<div class="user">{username}</div>')
-            f.write(f'<div class="date">{date_str}</div>')
-            if content:
-                f.write(f'<div class="content">{html.escape(content)}</div>')
-            else:
-                f.write(f'<div class="content">Media message</div>')
-            f.write(reply_info)
-            f.write(media_reference)
-            f.write('</div>')
+        # HTML output
+        parts.append('<div class="message">')
+        parts.append(f'<div class="channel">#{channel_name}</div>')
+        parts.append(f'<div class="user">{username}</div>')
+        parts.append(f'<div class="date">{date_str}</div>')
+        if content:
+            parts.append(f'<div class="content">{html.escape(content)}</div>')
+        else:
+            parts.append(f'<div class="content">Media message</div>')
+        parts.append(reply_info)
+        parts.append(media_reference)
+        parts.append("</div>")
 
-        f.write('</body></html>')
+    parts.append("</body></html>")
 
+    html_out = "".join(parts)
+
+    def _write_html() -> None:
+        with open(filepath, "w", encoding="utf-8") as f:
+            f.write(html_out)
+
+    await asyncio.to_thread(_write_html)
     logging.info(f"Combined HTML chat history saved to {os.path.abspath(filepath)}")
 
 async def archive_channels(channels=None, hours_history=None, output_dir=None, 
