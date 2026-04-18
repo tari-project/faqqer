@@ -221,8 +221,8 @@ async def write_combined_html_history(all_messages, filepath, channels, hours_hi
 
         # HTML output
         parts.append('<div class="message">')
-        parts.append(f'<div class="channel">#{channel_name}</div>')
-        parts.append(f'<div class="user">{username}</div>')
+        parts.append(f'<div class="channel">#{html.escape(channel_name)}</div>')
+        parts.append(f'<div class="user">{html.escape(username)}</div>')
         parts.append(f'<div class="date">{date_str}</div>')
         if content:
             parts.append(f'<div class="content">{html.escape(content)}</div>')

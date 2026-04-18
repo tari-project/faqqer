@@ -6,6 +6,15 @@ import httpx
 
 logger = logging.getLogger(__name__)
 
+_http_client: httpx.AsyncClient | None = None
+
+
+def _get_client() -> httpx.AsyncClient:
+    global _http_client
+    if _http_client is None or _http_client.is_closed:
+        _http_client = httpx.AsyncClient(timeout=httpx.Timeout(30.0))
+    return _http_client
+
 BLOCK_HEIGHT_CRON_DEFAULT = "0 */4 * * *"
 HASH_POWER_CRON_DEFAULT = "0 */12 * * *"
 
@@ -67,10 +76,10 @@ async def get_latest_info() -> tuple[int, int, int, int, float]:
     url = os.getenv("TARI_EXPLORER_URL", "https://textexplore.tari.com/?json").strip()
     if not url:
         url = "https://textexplore.tari.com/?json"
-    async with httpx.AsyncClient(timeout=httpx.Timeout(30.0)) as client:
-        response = await client.get(url)
-        response.raise_for_status()
-        data = response.json()
+    client = _get_client()
+    response = await client.get(url)
+    response.raise_for_status()
+    data = response.json()
 
     def _to_int(value) -> int:
         try:
