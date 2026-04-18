@@ -279,17 +279,16 @@ async def archive_channels(channels=None, hours_history=None, output_dir=None,
     logging.info(f"Fetching last {hours_history} hours of messages")
     
     # Start the Telegram client
-    session_file = os.getenv("TELEGRAM_SESSION_FILE", "faq_archiver")
-    if os.path.exists(f"{session_file}.session"):
-        await client.start(phone=phone_number)
-    else:
+    await client.connect()
+    if not await client.is_user_authorized():
         logger.error(
-            "No Telethon session file found. "
-            "Customer analysis requires a pre-generated "
-            "session. Run faq_archiver.py interactively "
-            "once to create the session, then mount "
-            "the .session file into the container."
+            "Telethon session is missing or unauthorized. "
+            "Customer analysis requires a pre-authenticated "
+            "session. Run faq_archiver.py locally to create "
+            "the session, then mount the .session file "
+            "into the container."
         )
+        await client.disconnect()
         return {"total_messages": 0, "channels_processed": []}
     
     # Collect all messages from all channels

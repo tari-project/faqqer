@@ -29,16 +29,19 @@ def _configure_logging() -> None:
     )
 
 
-def _install_signal_handlers(stop_event: asyncio.Event) -> None:
-    def _handle_signal(signum, _frame=None) -> None:
-        logging.getLogger(__name__).info("Signal received: %s", signum)
+def _install_signal_handlers(
+    stop_event: asyncio.Event,
+    loop: asyncio.AbstractEventLoop,
+) -> None:
+    def _handle_signal(sig) -> None:
+        logging.getLogger(__name__).info("Signal received: %s", sig)
         stop_event.set()
 
-    try:
-        signal.signal(signal.SIGINT, _handle_signal)
-        signal.signal(signal.SIGTERM, _handle_signal)
-    except Exception:
-        logging.getLogger(__name__).warning("Signal handlers not fully supported in this environment")
+    for sig in (signal.SIGINT, signal.SIGTERM):
+        try:
+            loop.add_signal_handler(sig, _handle_signal, sig)
+        except NotImplementedError:
+            signal.signal(sig, lambda s, f: _handle_signal(s))
 
 
 async def main() -> int:
@@ -99,7 +102,8 @@ async def main() -> int:
     scheduler.start()
 
     stop_event = asyncio.Event()
-    _install_signal_handlers(stop_event)
+    loop = asyncio.get_running_loop()
+    _install_signal_handlers(stop_event, loop)
 
     async def _run_and_stop_on_error(coro):
         try:
@@ -109,11 +113,19 @@ async def main() -> int:
             stop_event.set()
             raise
 
-    telegram_task = asyncio.create_task(_run_and_stop_on_error(run_telegram_bot(stop_event)))
-    discord_task = asyncio.create_task(_run_and_stop_on_error(run_discord_bot(stop_event)))
+    tasks = []
+    if os.getenv("TELEGRAM_BOT_TOKEN"):
+        tasks.append(asyncio.create_task(_run_and_stop_on_error(run_telegram_bot(stop_event))))
+    if os.getenv("DISCORD_BOT_TOKEN"):
+        tasks.append(asyncio.create_task(_run_and_stop_on_error(run_discord_bot(stop_event))))
+    if not tasks:
+        logging.getLogger(__name__).error(
+            "No bot tokens configured. Set TELEGRAM_BOT_TOKEN or DISCORD_BOT_TOKEN."
+        )
+        return 1
 
     try:
-        await asyncio.gather(telegram_task, discord_task)
+        await asyncio.gather(*tasks)
         return 0
     except asyncio.CancelledError:
         stop_event.set()
