@@ -281,7 +281,15 @@ If no issues related to "{custom_question}" are found, respond with:
             timeout=ANALYSIS_TIMEOUT,
         )
 
-        result = response.choices[0].message.content
+        if not getattr(response, "choices", None):
+            logger.error("OpenAI analysis returned no choices")
+            return None
+
+        result = response.choices[0].message.content if response.choices[0].message else None
+        if not result:
+            logger.error("OpenAI analysis returned empty message content")
+            return None
+
         logger.info("OpenAI analysis response received: %s characters", len(result))
         logger.info("Raw OpenAI response: %s...", result[:500])
         return result
@@ -516,11 +524,6 @@ Bot accounts cannot access historical messages from channels.
             await send_message_to_group(telegram_bot, formatted_message, target_group_id)
 
         logger.info("Customer service analysis completed and posted")
-        try:
-            await asyncio.to_thread(shutil.rmtree, "temp_analysis", ignore_errors=True)
-            logger.info("Cleaned up temp_analysis directory")
-        except Exception as e:
-            logger.warning("Could not clean temp_analysis: %s", e)
 
     except Exception as e:
         logger.error("Error in customer service analysis: %s", e)
@@ -536,6 +539,13 @@ Bot accounts cannot access historical messages from channels.
             await send_message_to_group(telegram_bot, error_msg, target_group_id)
         except Exception:
             pass  # Don't fail if we can't send error message
+    finally:
+        if os.path.exists("temp_analysis"):
+            try:
+                await asyncio.to_thread(shutil.rmtree, "temp_analysis", ignore_errors=True)
+                logger.info("Cleaned up temp_analysis directory")
+            except Exception as e:
+                logger.warning("Could not clean temp_analysis: %s", e)
 
 
 async def manual_analysis_trigger(telegram_bot, target_group_id=None, hours=None, custom_question=None):
