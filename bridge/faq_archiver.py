@@ -38,15 +38,34 @@ def ensure_directories_exist(output_dir, media_folder):
     if not os.path.exists(media_folder):
         os.makedirs(media_folder)
 
-# Initialize the Telegram client for user login
+# Initialize the Telegram client lazily so importing this module does not fail
+# when TELEGRAM_API_ID / TELEGRAM_API_HASH are unset (e.g. Discord/Telegram Q&A mode).
 _session_file = os.getenv("TELEGRAM_SESSION_FILE", "faq_archiver")
-client = TelegramClient(_session_file, api_id, api_hash)
+client = None
+
+
+def _get_telegram_client():
+    global client
+    if client is not None:
+        return client
+    raw_api_id = os.getenv("TELEGRAM_API_ID") if api_id is None else api_id
+    raw_api_hash = os.getenv("TELEGRAM_API_HASH") if api_hash is None else api_hash
+    if not raw_api_id or not raw_api_hash:
+        raise ValueError("Missing TELEGRAM_API_ID or TELEGRAM_API_HASH in environment")
+    try:
+        parsed_api_id = int(raw_api_id)
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f"Invalid TELEGRAM_API_ID: {raw_api_id!r}") from exc
+    client = TelegramClient(_session_file, parsed_api_id, raw_api_hash)
+    return client
+
 
 async def get_messages_from_channel(channel_username, hours_history, media_folder):
     """
     Fetches all messages from the given channel within the specified time period.
     Returns messages sorted in chronological order (oldest first).
     """
+    active_client = _get_telegram_client()
     cutoff_time = datetime.now(timezone.utc) - timedelta(hours=hours_history)
 
     def _ensure_utc(dt: datetime) -> datetime:
@@ -62,7 +81,7 @@ async def get_messages_from_channel(channel_username, hours_history, media_folde
 
     while True:
         # Fetch up to 'limit' messages (newest first)
-        messages = await client.get_messages(
+        messages = await active_client.get_messages(
             channel_username,
             limit=limit,
             offset_id=offset_id
@@ -116,13 +135,13 @@ async def write_combined_text_history(all_messages, filepath, channels, hours_hi
 
         # Check if message is a reply to another
         if msg.reply_to_msg_id:
-            replied_message = message_dict.get(msg.reply_to_msg_id, "Unknown message")
+            replied_message = message_dict.get((channel_name, msg.reply_to_msg_id), "Unknown message")
             reply_info = f"(Replying to: {replied_message})"
         else:
             reply_info = ""
 
         # Add message content to dictionary for future replies
-        message_dict[msg.id] = content
+        message_dict[(channel_name, msg.id)] = content
 
         parts.append(f"Channel: {channel_name} | User: {username} | Date: {date_str}\n")
         parts.append(f"Message: {content} {reply_info}\n")
@@ -161,14 +180,15 @@ async def write_combined_html_history(all_messages, filepath, channels, hours_hi
 <body>
 """)
 
+    escaped_channels = ", ".join(html.escape(str(ch)) for ch in channels)
     parts.append("<h1>Combined Chat History</h1>")
-    parts.append(f"<p><strong>Channels:</strong> {', '.join(channels)}</p>")
+    parts.append(f"<p><strong>Channels:</strong> {escaped_channels}</p>")
     parts.append(f"<p><strong>Time period:</strong> Last {hours_history} hours</p>")
     parts.append(
         f"<p><strong>Generated on:</strong> {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC</p>"
     )
 
-    # To store a mapping of message ID to its content (used for "reply to" info)
+    # To store a mapping of (channel_name, message ID) to its content (used for "reply to" info)
     message_dict = {}
 
     for msg in all_messages:
@@ -180,7 +200,7 @@ async def write_combined_html_history(all_messages, filepath, channels, hours_hi
 
         # Reply info
         if msg.reply_to_msg_id:
-            replied_message = message_dict.get(msg.reply_to_msg_id, "Unknown message")
+            replied_message = message_dict.get((channel_name, msg.reply_to_msg_id), "Unknown message")
             reply_info = f'<div class="reply">Replying to: {html.escape(replied_message)}</div>'
         else:
             reply_info = ""
@@ -191,25 +211,27 @@ async def write_combined_html_history(all_messages, filepath, channels, hours_hi
                 media_path = await msg.download_media(file=media_folder)
                 if media_path:
                     media_filename = os.path.basename(media_path)
+                    safe_media_src = html.escape(f"{media_folder}/{media_filename}", quote=True)
+                    safe_media_name = html.escape(media_filename)
                     if media_filename.lower().endswith((".jpg", ".jpeg", ".png", ".gif")):
                         media_reference = (
                             f'<div class="media">'
-                            f'<img src="{media_folder}/{media_filename}" alt="Image" width="300">'
+                            f'<img src="{safe_media_src}" alt="Image" width="300">'
                             "</div>"
                         )
                     elif media_filename.lower().endswith((".mp4", ".webm", ".mkv")):
                         media_reference = (
                             f'<div class="media">'
                             f'<video width="300" controls>'
-                            f'<source src="{media_folder}/{media_filename}" type="video/mp4">'
+                            f'<source src="{safe_media_src}" type="video/mp4">'
                             "Your browser does not support the video tag."
                             "</video></div>"
                         )
                     else:
                         media_reference = (
                             f'<div class="media">'
-                            f'<a href="{media_folder}/{media_filename}" download>'
-                            f"Download {media_filename}</a></div>"
+                            f'<a href="{safe_media_src}" download>'
+                            f"Download {safe_media_name}</a></div>"
                         )
                 else:
                     logging.warning(f"Failed to download media for message {msg.id}")
@@ -217,7 +239,7 @@ async def write_combined_html_history(all_messages, filepath, channels, hours_hi
                 logging.error(f"Error downloading media for message {msg.id}: {e}")
 
         # Store for future replies
-        message_dict[msg.id] = content if content else "Media message"
+        message_dict[(channel_name, msg.id)] = content if content else "Media message"
 
         # HTML output
         parts.append('<div class="message">')
@@ -279,52 +301,55 @@ async def archive_channels(channels=None, hours_history=None, output_dir=None,
     logging.info(f"Fetching last {hours_history} hours of messages")
     
     # Start the Telegram client
-    await client.connect()
-    if not await client.is_user_authorized():
-        logger.error(
-            "Telethon session is missing or unauthorized. "
-            "Customer analysis requires a pre-authenticated "
-            "session. Run faq_archiver.py locally to create "
-            "the session, then mount the .session file "
-            "into the container."
-        )
-        await client.disconnect()
-        return {"total_messages": 0, "channels_processed": []}
-    
-    # Collect all messages from all channels
-    all_messages = []
-    channel_stats = {}
-    
-    for channel in channels:
-        try:
-            messages = await get_messages_from_channel(channel, hours_history, media_folder)
-            all_messages.extend(messages)
-            channel_stats[channel] = len(messages)
-            logging.info(f"Channel {channel}: {len(messages)} messages")
-        except Exception as e:
-            logging.error(f"Error fetching messages from {channel}: {e}")
-            channel_stats[channel] = 0
-    
-    # Sort all messages in chronological order (oldest to newest)
-    all_messages.sort(key=lambda x: x.date)
-    
-    # Generate output file
-    if output_as_text:
-        await write_combined_text_history(all_messages, output_text_file, channels, hours_history)
-    else:
-        await write_combined_html_history(all_messages, output_html_file, channels, hours_history, media_folder)
-    
-    # Count unique senders
-    unique_senders = set()
-    for msg in all_messages:
-        sender = await msg.get_sender()
-        if sender:
-            unique_senders.add(sender.id)
-    
-    # Return summary statistics
-    return {
-        "total_messages": len(all_messages),
-        "unique_senders": len(unique_senders),
-        "channel_stats": channel_stats,
-        "channels_processed": list(channel_stats.keys())
-    }
+    active_client = _get_telegram_client()
+    await active_client.connect()
+    try:
+        if not await active_client.is_user_authorized():
+            logger.error(
+                "Telethon session is missing or unauthorized. "
+                "Customer analysis requires a pre-authenticated "
+                "session. Run faq_archiver.py locally to create "
+                "the session, then mount the .session file "
+                "into the container."
+            )
+            return {"total_messages": 0, "channels_processed": []}
+
+        # Collect all messages from all channels
+        all_messages = []
+        channel_stats = {}
+
+        for channel in channels:
+            try:
+                messages = await get_messages_from_channel(channel, hours_history, media_folder)
+                all_messages.extend(messages)
+                channel_stats[channel] = len(messages)
+                logging.info(f"Channel {channel}: {len(messages)} messages")
+            except Exception as e:
+                logging.error(f"Error fetching messages from {channel}: {e}")
+                channel_stats[channel] = 0
+
+        # Sort all messages in chronological order (oldest to newest)
+        all_messages.sort(key=lambda x: x.date)
+
+        # Generate output file
+        if output_as_text:
+            await write_combined_text_history(all_messages, output_text_file, channels, hours_history)
+        else:
+            await write_combined_html_history(all_messages, output_html_file, channels, hours_history, media_folder)
+
+        # Count unique senders
+        unique_senders = set()
+        for msg in all_messages:
+            sender = await msg.get_sender()
+            if sender:
+                unique_senders.add(sender.id)
+
+        # Return summary statistics
+        return {
+            "total_messages": len(all_messages),
+            "unique_senders": len(unique_senders),
+            "channel_stats": channel_stats,
+            "channels_processed": list(channel_stats.keys())
+        }
+    finally:
+        await active_client.disconnect()

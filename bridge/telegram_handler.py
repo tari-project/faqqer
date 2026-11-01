@@ -1,5 +1,6 @@
 import logging
 import os
+import re
 
 from telegram import ReactionTypeEmoji, Update
 from telegram.ext import (
@@ -84,10 +85,10 @@ def build_telegram_app() -> Application:
         if bot_username:
             bot_username_cache = bot_username
 
-        lowered = text.lower()
         mentioned = False
         if bot_username:
-            mentioned = f"@{bot_username.lower()}" in lowered
+            mention_pattern = re.compile(rf"@{re.escape(bot_username)}(?!\w)", re.IGNORECASE)
+            mentioned = bool(mention_pattern.search(text))
 
         replied_to_bot = False
         reply = update.effective_message.reply_to_message if update.effective_message else None
@@ -99,8 +100,7 @@ def build_telegram_app() -> Application:
 
         cleaned = text
         if mentioned and bot_username:
-            cleaned = cleaned.replace(f"@{bot_username}", "").replace(f"@{bot_username.lower()}", "")
-            cleaned = cleaned.strip()
+            cleaned = re.sub(rf"@{re.escape(bot_username)}(?!\w)", "", cleaned, flags=re.IGNORECASE).strip()
 
         if not cleaned:
             return
@@ -151,14 +151,16 @@ def build_telegram_app() -> Application:
 
         question, answer = pending_qa[(chat_id, message_id)]
         ok = await push_to_kb(question, answer)
-        if ok:
-            pending_qa.pop((chat_id, message_id), None)
         logger.info(
             "Telegram KB push attempted chat_id=%s user_id=%s ok=%s",
             chat_id,
             user_id,
             ok,
         )
+        if not ok:
+            return
+
+        pending_qa.pop((chat_id, message_id), None)
 
         try:
             await context.bot.send_message(
